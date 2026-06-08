@@ -1,0 +1,2837 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lễ Hội Hoa Anh Đào Gigamall 2026 - Cung Đường Vàng Sakura</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS for modern design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom Styles & Animation */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffeef2 100%);
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        /* Falling Sakura Petals Animation */
+        .sakura-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 40;
+            overflow: hidden;
+        }
+        .petal {
+            position: absolute;
+            background-color: #ffb7c5;
+            border-radius: 150% 0 150% 150%;
+            opacity: 0.8;
+            transform: rotate(-45deg);
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                top: -10%;
+                transform: translateX(0) rotate(-45deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.9;
+            }
+            90% {
+                opacity: 0.9;
+            }
+            100% {
+                top: 110%;
+                transform: translateX(200px) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ffeef2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff8fa3;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff5c7c;
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Sakura Petals Overlay -->
+    <div class="sakura-container" id="sakura-container"></div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div id="app" class="flex flex-col min-h-screen">
+        <!-- HEADER -->
+        <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-pink-100 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="navigate('home')">
+                    <div class="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-pink-200 animate-pulse">
+                        <i data-lucide="flower-2"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg text-pink-600 block leading-tight">SAKURA GIGAMALL</span>
+                        <span class="text-xs text-slate-500 block tracking-widest font-semibold uppercase">Festival 2026</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs (Desktop) -->
+                <nav class="hidden lg:flex space-x-1" id="nav-desktop">
+                    <!-- Dynamic injection -->
+                </nav>
+
+                <!-- Actions: Language, Profile -->
+                <div class="flex items-center space-x-4">
+                    <!-- Lang Switcher -->
+                    <button id="lang-btn" onclick="toggleLanguage()" class="flex items-center space-x-1 bg-pink-50 hover:bg-pink-100 text-pink-600 px-3 py-1.5 rounded-full text-xs font-bold border border-pink-200 transition-colors">
+                        <i data-lucide="languages" class="w-4 h-4"></i>
+                        <span id="lang-label">VI</span>
+                    </button>
+
+                    <!-- User Action -->
+                    <div id="user-header-area">
+                        <!-- Dynamic logged in user / login trigger -->
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button class="lg:hidden p-2 text-slate-600 hover:text-pink-600 focus:outline-none" onclick="toggleMobileMenu()">
+                        <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Menu -->
+            <div class="hidden lg:hidden bg-white border-t border-pink-50 py-3 px-4 shadow-inner" id="mobile-menu">
+                <nav class="flex flex-col space-y-2" id="nav-mobile">
+                    <!-- Dynamic dynamic mobile links -->
+                </nav>
+            </div>
+        </header>
+
+        <!-- MAIN VIEW PORTAL -->
+        <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8" id="main-content">
+            <!-- Dynamic Subviews get mounted here -->
+            <div id="loading-spinner" class="flex flex-col items-center justify-center py-20">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600"></div>
+                <p class="mt-4 text-slate-500 text-sm">Đang tải trải nghiệm lễ hội...</p>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="bg-slate-950 text-slate-300 border-t-4 border-pink-500 pt-16 pb-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                    <!-- brand info -->
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3 text-white">
+                            <div class="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center text-white">
+                                <i data-lucide="flower-2"></i>
+                            </div>
+                            <span class="font-bold text-xl tracking-wider">GIGAMALL</span>
+                        </div>
+                        <p class="text-sm text-slate-400" id="footer-desc">
+                            MỖI TRẢI NGHIỆM MỖI NIỀM VUI. <br>
+                            Hãy đồng hành cùng chúng tôi trên "Cung Đường Vàng Sakura" để lưu giữ khoảnh khắc văn hóa Nhật Bản nhiệm màu ngay tại Sài Gòn.
+                        </p>
+                        <!-- Socials -->
+                        <div class="flex space-x-4 pt-2">
+                            <a href="https://www.facebook.com/gigamallvietnam/?locale=vi_VN" target="_blank" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-pink-500 hover:text-white flex items-center justify-center text-slate-400 transition-colors">
+                                <i data-lucide="facebook" class="w-4 h-4"></i>
+                            </a>
+                            <a href="https://www.instagram.com/gigamall_vietnam/" target="_blank" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-pink-500 hover:text-white flex items-center justify-center text-slate-400 transition-colors">
+                                <i data-lucide="instagram" class="w-4 h-4"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@GigamallVietnam" target="_blank" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-pink-500 hover:text-white flex items-center justify-center text-slate-400 transition-colors">
+                                <i data-lucide="youtube" class="w-4 h-4"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@gigamallvietnam" target="_blank" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-pink-500 hover:text-white flex items-center justify-center text-slate-400 transition-colors">
+                                <span class="font-black text-xs">TT</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- address info -->
+                    <div class="space-y-4">
+                        <h4 class="text-white font-semibold text-lg border-b border-pink-500/20 pb-2" id="footer-contact-title">Thông Tin Liên Hệ</h4>
+                        <ul class="space-y-3 text-sm text-slate-400">
+                            <li class="flex items-start space-x-3">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-pink-500 shrink-0 mt-0.5"></i>
+                                <span>240-242 Phạm Văn Đồng, P. Hiệp Bình Chánh, TP. Thủ Đức, TP. Hồ Chí Minh</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="phone" class="w-5 h-5 text-pink-500 shrink-0"></i>
+                                <span>(028) 7100 3839 | 7109 3839</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="mail" class="w-5 h-5 text-pink-500 shrink-0"></i>
+                                <span>dvkh@gigamall.com.vn</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Open times -->
+                    <div class="space-y-4">
+                        <h4 class="text-white font-semibold text-lg border-b border-pink-500/20 pb-2" id="footer-hours-title">Thời Gian Hoạt Động</h4>
+                        <ul class="space-y-3 text-sm text-slate-400">
+                            <li class="flex justify-between border-b border-slate-800 pb-2">
+                                <span id="footer-weekdays">Thứ Hai - Thứ Sáu</span>
+                                <span class="text-pink-400 font-semibold">9:30 - 22:00</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span id="footer-weekends">Thứ Bảy & Chủ Nhật</span>
+                                <span class="text-pink-400 font-semibold">9:00 - 22:00</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-900 pt-8 text-center text-xs text-slate-500 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p>&copy; 2026 TTTM Gigamall. Tất cả quyền được bảo lưu. Dự án Demo Lễ hội Hoa Anh Đào.</p>
+                    <p class="text-pink-400/60 flex items-center justify-center gap-1">
+                        Made with <i data-lucide="heart" class="w-3 h-3 fill-pink-400 text-pink-400"></i> for Sakura Festival 2026
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- CHATBOX AI FLOATING -->
+        <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+            <!-- Chat bubble content -->
+            <div id="ai-chat-card" class="hidden w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-pink-100 overflow-hidden mb-4 transition-all duration-300 transform translate-y-4 opacity-0">
+                <!-- Chat Head -->
+                <div class="bg-gradient-to-r from-pink-500 to-purple-600 text-white p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center">
+                            <i data-lucide="bot" class="w-5 h-5 text-white animate-bounce"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm">Kiko - Trợ lý Sakura AI</h4>
+                            <span class="text-xs text-pink-100 flex items-center"><span class="w-1.5 h-1.5 bg-green-400 rounded-full mr-1.5 inline-block"></span>Online</span>
+                        </div>
+                    </div>
+                    <button onclick="toggleChatbox()" class="text-white hover:text-pink-200">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                <!-- Chat Body messages -->
+                <div id="chat-messages-container" class="h-80 overflow-y-auto p-4 space-y-4 bg-slate-50">
+                    <!-- Welcomes -->
+                    <div class="flex items-start space-x-2">
+                        <div class="w-7 h-7 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center shrink-0">
+                            <i data-lucide="bot" class="w-4 h-4"></i>
+                        </div>
+                        <div class="bg-white rounded-lg p-2.5 shadow-sm text-xs text-slate-700 max-w-[80%]">
+                            <p id="chat-welcome-msg">Chào mừng bạn đến Lễ Hội Hoa Anh Đào Gigamall 2026! 🌸 Tôi có thể giúp gì cho bạn? Hãy thử hỏi về: Đăng ký, Chuyển khoản, Thuê Yukata, Nhà ma, Trò chơi, Quà tặng...</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Quick tags suggestions -->
+                <div class="p-2 border-t border-slate-100 bg-white flex gap-1.5 overflow-x-auto text-[10px] whitespace-nowrap">
+                    <button onclick="sendQuickMessage('Đăng ký')" class="bg-pink-50 text-pink-600 px-2 py-1 rounded-full hover:bg-pink-100 font-semibold border border-pink-100">Vé / Đăng ký</button>
+                    <button onclick="sendQuickMessage('Thuê đồ Yukata thế nào?')" class="bg-purple-50 text-purple-600 px-2 py-1 rounded-full hover:bg-purple-100 font-semibold border border-purple-100">Thuê Yukata</button>
+                    <button onclick="sendQuickMessage('Nhà ma kinh dị có gì hot?')" class="bg-cyan-50 text-cyan-600 px-2 py-1 rounded-full hover:bg-cyan-100 font-semibold border border-cyan-100">Nhà ma</button>
+                    <button onclick="sendQuickMessage('Lịch trình sự kiện có mấy giai đoạn?')" class="bg-orange-50 text-orange-600 px-2 py-1 rounded-full hover:bg-orange-100 font-semibold border border-orange-100">Lịch trình</button>
+                </div>
+                <!-- Chat Input Form -->
+                <form id="chat-form" onsubmit="handleChatSubmit(event)" class="border-t border-slate-100 p-3 flex bg-white gap-2">
+                    <input type="text" id="chat-input" placeholder="Hỏi Kiko điều gì đó..." class="flex-grow border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-pink-500">
+                    <button type="submit" class="bg-pink-500 text-white rounded-lg p-2 hover:bg-pink-600 transition-colors shadow-lg shadow-pink-100">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Trigger Button -->
+            <button onclick="toggleChatbox()" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white p-4 rounded-full shadow-2xl flex items-center justify-center transform hover:scale-110 active:scale-95 transition-all">
+                <i data-lucide="message-square-text" class="w-6 h-6" id="chat-trigger-icon"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- MOCK SYSTEM & SEED DATA IN CLIENT -->
+    <script>
+        // Database State Simulator (Saves locally in localStorage to persist across demo sessions)
+        const MOCK_DB = {
+            init() {
+                if (!localStorage.getItem('SAKURA_DB_INITIALIZED')) {
+                    this.seed();
+                }
+            },
+            seed() {
+                // 16 Activities Seed
+                const activities = [
+                    { id: 1, title: 'Lễ Khai Mạc Cung Đường Vàng Sakura', dateRange: '21.3 - 29.3', section: 'hanami', time: '19:00 - 21.03.2026', location: 'Sân khấu trung tâm', fee: 0, desc: 'Lễ khai mạc bùng nổ, đánh thức linh hồn hoa anh đào mùa xuân. Phát sóng nhạc nước, LED rực rỡ, phát tặng 1.000 phần quà lưu niệm may mắn độc đáo từ Nhật Bản cho khách check-in sớm.', bankInfo: '', qrImage: '', banner: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800' },
+                    { id: 2, title: 'Liveshow Cosplay Runway & Võ thuật', dateRange: '21.3 - 29.3', section: 'hanami', time: '18:00 - 20:00 Hằng đêm', location: 'Khu biểu diễn sân khấu', fee: 0, desc: 'Màn trình diễn Catwalk đặc biệt quy tụ 100+ Coser danh tiếng cả nước, biểu diễn kịch nghệ Anime cổ trang và biểu diễn võ đạo Aikido uyển chuyển, trống trận Taiko dũng mãnh.', bankInfo: '', qrImage: '', banner: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800' },
+                    { id: 3, title: 'Múa Yosakoi Đường phố', dateRange: '21.3 - 29.3', section: 'hanami', time: '15:00 - 17:00 Thứ 7 & CN', location: 'Đường quanh lễ hội', fee: 0, desc: 'Các câu lạc bộ múa rực rỡ sắc màu, mang đến nhịp điệu rộn ràng, tưng bừng cầu chúc may mắn và gắn kết tình hữu nghị.', bankInfo: '', qrImage: '', banner: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&q=80&w=800' },
+                    { id: 4, title: 'Giao lưu Robot AI & Công nghệ Nhật Bản', dateRange: '21.3 - 29.3', section: 'hanami', time: '09:00 - 21:00 Mỗi ngày', location: 'Khu sảnh hi-tech', fee: 0, desc: 'Tận mắt gặp gỡ và trò chuyện với robot AI thông minh biết múa quạt cổ trang Nhật Bản, trải nghiệm vẽ tranh Digital Art siêu thực.', bankInfo: '', qrImage: '', banner: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800' },
+                    { id: 5, title: 'Workshop vẽ tranh Digital Art nhân vật Anime', dateRange: '21.3 - 29.3', section: 'hanami', time: '14:00 - 16:00', location: 'Tháp Sáng Tạo', fee: 50000, desc: 'Học vẽ và phối màu kỹ thuật số cùng họa sĩ vẽ truyện chuyên nghiệp. Trải nghiệm bảng vẽ Wacom xịn xò.', bankInfo: 'Vietcombank - 1012345678 - Sakura Gigamall', qrImage: 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SakuraGigamall_WorkshopDigital', banner: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800' },
+                    { id: 6, title: 'Thưởng trà Matcha Nhật Bản chuẩn vị', dateRange: '30.3 - 12.4', section: 'culinary', time: '09:00 - 11:00 Hằng ngày', location: 'Gian hàng Trà Đạo', fee: 60000, desc: 'Nghệ nhân trà đạo hướng dẫn cách đánh tơi trà bằng chổi chasen, thưởng thức cùng bánh ngọt wagashi truyền thống.', bankInfo: 'Vietcombank - 1012345678 - Sakura Gigamall', qrImage: 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SakuraGigamall_Matcha', banner: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&q=80&w=800' },
+                    { id: 7, title: 'Tạo hình đất sét các món ẩm thực Sushi/Ramen mini', dateRange: '30.3 - 12.4', section: 'culinary', time: '15:00 - 17:00 hằng ngày', location: 'Gian hàng Đất Sét Nhật', fee: 40000, desc: 'Khám phá sự kiên nhẫn tinh xảo để tạo ra những mô hình món ăn ngon mắt, mang tác phẩm về nhà làm kỷ niệm cực dễ thương.', bankInfo: 'Vietcombank - 1012345678 - Sakura Gigamall', qrImage: 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SakuraGigamall_Clay', banner: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&q=80&w=800' },
+                    { id: 8, title: 'Gian hàng ẩm thực Takoyaki & Okonomiyaki đường phố', dateRange: '30.3 - 12.4', section: 'culinary', time: '09:30 - 22:00', location: 'Khu ẩm thực Yatai', fee: 0, desc: 'Thưởng ngoạn các quầy ẩm thực truyền thống khói tỏa hương thơm, ăn bánh bạch tuộc nóng hổi, bánh xèo chuẩn vùng Osaka.', bankInfo: '', qrImage: '', banner: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800' },
+                    { id: 9, title: 'Trình diễn âm nhạc Shamisen & Koto', dateRange: '13.4 - 27.4', section: 'culture', time: '19:30 - 21:00', location: 'Sân khấu chính', fee: 0, desc: 'Lắng nghe những giai điệu cổ xưa hòa tấu bằng đàn tranh Koto và đàn ba dây Shamisen thanh tao thoát tục.', bankInfo: '', qrImage: '', banner: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&q=80&w=800' },
+                    { id: 10, title: 'Cosplay Fan Meeting hoành tráng', dateRange: '13.4 - 27.4', section: 'culture', time: '14:00 - 17:00 Chủ Nhật', location: 'Sảnh chính', fee: 0, desc: 'Cơ hội vàng giao lưu trực tiếp, chụp ảnh lưu niệm cùng các thần tượng cosplayer hàng đầu Châu Á.', bankInfo: '', qrImage: '', banner: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800' },
+                    { id: 11, title: 'Cuộc thi toán thông minh Finger Math', dateRange: '13.4 - 27.4', section: 'culture', time: '09:00 - 12:00', location: 'Khu vực Finger Math', fee: 30000, desc: 'Cuộc thi bổ ích phát triển trí tuệ trẻ thơ từ phương pháp Nhật Bản, có quà tặng sách học tập hữu ích.', bankInfo: 'Vietcombank - 1012345678 - Sakura Gigamall', qrImage: 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SakuraGigamall_FingerMath', banner: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800' },
+                    { id: 12, title: 'Lớp kỹ năng gấp giấy nghệ thuật Origami', dateRange: '13.4 - 27.4', section: 'culture', time: '10:00 - 11:30', location: 'Khu quà lưu niệm', fee: 0, desc: 'Sáng tạo chim hạc giấy, hoa sen, kiếm samurai từ một mảnh giấy vuông kỳ diệu cùng hướng dẫn viên nhiệt tình.', bankInfo: '', qrImage: '', banner: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800' },
+                    { id: 13, title: 'Trải nghiệm trẻ hóa làn da Công nghệ cao', dateRange: '28.4 - 3.5', section: 'hitech', time: '09:30 - 21:30', location: 'Khu công nghệ Sakura', fee: 0, desc: 'Sử dụng hệ thống phân tích sắc tố AI của tập đoàn Shiseido Nhật Bản để tư vấn dưỡng da miễn phí cho phụ nữ.', bankInfo: '', qrImage: '', banner: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=800' },
+                    { id: 14, title: 'Workshop Lắp ráp Robotics Nhật Bản trẻ em', dateRange: '28.4 - 3.5', section: 'hitech', time: '14:00 - 16:30', location: 'Khu Tháp Sáng Tạo', fee: 100000, desc: 'Các kỹ sư nhí sẽ tự tay lắp ráp xe đua robot tự động chạy bằng pin mặt trời, hỗ trợ giữ tư duy sáng tạo đột phá.', bankInfo: 'Vietcombank - 1012345678 - Sakura Gigamall', qrImage: 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SakuraGigamall_Robotics', banner: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800' },
+                    { id: 15, title: 'Trình diễn Robot AI múa quạt', dateRange: '28.4 - 3.5', section: 'hitech', time: '19:00 - 19:30', location: 'Sân khấu hi-tech', fee: 0, desc: 'Sự kết hợp hoàn hảo giữa công nghệ xử lý chuyển động đa khớp chính xác và nét đẹp văn hóa nhảy múa truyền thống.', bankInfo: '', qrImage: '', banner: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=800' },
+                    { id: 16, title: 'Đêm Chung kết & Trao giải Cosplay Nhật Bản Tương Lai', dateRange: '28.4 - 3.5', section: 'hitech', time: '19:00 - 22:00 ngày 03.05.2026', location: 'Sân khấu trung tâm', fee: 0, desc: 'Đêm gala rực lửa tổng kết bình chọn cosplay, tìm ra thí sinh xuất sắc nhất đoạt vương miện Hoa Anh Đào Vàng 2026.', bankInfo: '', qrImage: '', banner: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80&w=800' }
+                ];
+
+                // 10 Booths Seed
+                const booths = [
+                    { id: 1, name: 'Mystical Yukata Shop', location_label: 'Bên trái cổng vào', mission: 'Check-in bằng cách quét AI Kiosk tại quầy.', reward: 'Thẻ bài quẻ may mắn Omikuji', desc: 'Nơi trưng bày hàng trăm mẫu Kimono/Yukata từ truyền thống tới cách tân.', map_x: 20, map_y: 25 },
+                    { id: 2, name: 'Khu Finger Math', location_label: 'Bàn trải nghiệm số 2', mission: 'Hoàn thành 1 phép tính nhẩm bằng ngón tay trong 10 giây.', reward: 'Sticker hoa anh đào xinh xắn', desc: 'Bí quyết rèn luyện bộ não thông minh như thần đồng Nhật Bản.', map_x: 20, map_y: 40 },
+                    { id: 3, name: 'Tháp Sáng Tạo', location_label: 'Khu vực trung tâm', mission: 'Tạo một trang Manga ngắn hoặc chụp ảnh photobooth.', reward: 'In bìa manga độc quyền mang tên bạn', desc: 'Nơi chắp cánh sáng tạo, hòa mình vào thế giới của Conan và Sakura.', map_x: 20, map_y: 70 },
+                    { id: 4, name: 'Workshop nặn đất sét', location_label: 'Khu thủ công mỹ nghệ', mission: 'Nặn thành công một viên sushi/món ngọt bằng đất sét.', reward: 'Móc khóa sushi xinh xắn tự làm', desc: 'Học hỏi sự dẻo dai khéo léo của các nghệ nhân đất sét.', map_x: 20, map_y: 85 },
+                    { id: 5, name: 'Quầy quà lưu niệm', location_label: 'Sát tháp sáng tạo', mission: 'Quét QR và đăng tải cảm nhận lên MXH.', reward: 'Quạt xếp Nhật Bản thơm hương gỗ', desc: 'Khu bán tranh, búp bê gỗ Kokeshi và quà lưu niệm thủ công.', map_x: 20, map_y: 55 },
+                    { id: 6, name: 'Khu vực Check-in chính', location_label: 'Gần cổng ra vào', mission: 'Chụp hình kỷ niệm dưới cổng Torii rực rỡ.', reward: 'Phong bao lì lì đỏ cầu may mắn', desc: 'Cổng Torii sơn đỏ rực đại diện cho ranh giới tâm linh linh thiêng.', map_x: 45, map_y: 25 },
+                    { id: 7, name: 'Quầy thức ăn hương vị Việt Nhật', location_label: 'Khu Yatai ẩm thực', mission: 'Mua sắm và check-in thưởng thức ẩm thực.', reward: 'Voucher giảm giá 10% tại tầng ẩm thực Gigamall', desc: 'Ramen nóng, bánh Takoyaki viên to giòn rụm.', map_x: 45, map_y: 40 },
+                    { id: 8, name: 'Quầy quần áo truyền thống', location_label: 'Cạnh quầy ẩm thực', mission: 'Mặc thử áo khoác Happi biểu diễn lễ hội.', reward: 'Khăn rằn Tenugui may mắn', desc: 'Tìm hiểu dệt may tinh xảo của xứ Phù Tang.', map_x: 45, map_y: 55 },
+                    { id: 9, name: 'Workshop Matcha trà đạo', location_label: 'Phòng thiền trà', mission: 'Chụp ảnh lúc thưởng trà đúng tư thế.', reward: 'Gói bột trà xanh cao cấp dùng thử', desc: 'Tìm lại sự tĩnh lặng bình yên tinh khiết giữa phố thị nhộn nhịp.', map_x: 45, map_y: 70 },
+                    { id: 10, name: 'Quầy trò chơi dân gian Kingyo-sukui', location_label: 'Khu giải trí hồ nước', mission: 'Vớt thành công 1 chú cá giấy đồ chơi.', reward: 'Bong bóng cá koi phao siêu to', desc: 'Trò chơi vớt cá giấy quen thuộc trong mọi dịp hè Nhật Bản.', map_x: 45, map_y: 85 }
+                ];
+
+                // Reviews
+                const reviews = [
+                    { id: 1, user_name: 'Khách ẩn danh', gender: 'Nữ', age: 24, ward: 'P. Linh Tây, Thủ Đức', rating: 5, content: 'Đẹp tuyệt vời! Không gian sảnh Phạm Văn Đồng trang trí rực rỡ, cánh hoa đào rơi làm bức ảnh sống ảo thơ mộng lắm luôn.', created_at: '2026-03-22 10:12' },
+                    { id: 2, user_name: 'Khách ẩn danh', gender: 'Nam', age: 19, ward: 'P. Hiệp Bình Chánh, Thủ Đức', rating: 5, content: 'Nhà ma kinh dị chất lượng nha. Cốt truyện oán linh Chiyo cảm động và rùng mình. Có nhiều lựa chọn kết quả hay cực!', created_at: '2026-03-23 18:45' },
+                    { id: 3, user_name: 'Khách ẩn danh', gender: 'Nữ', age: 31, ward: 'P. Bến Nghé, Quận 1', rating: 4, content: 'Mấy bé nhà mình mê hoạt động Finger Math và nặn đất sét lắm. Gigamall tổ chức lễ hội chu đáo, an toàn vệ sinh.', created_at: '2026-03-25 15:30' }
+                ];
+
+                // 5 Culture articles
+                const articles = [
+                    { id: 1, title: 'Ý nghĩa Văn hóa hoa Anh đào Sakura trong lòng người Nhật', category: 'Lễ hội', author: 'Sakura Expert', summary: 'Khám phá triết lý "Mono no aware" - sự vô thường đầy vẻ đẹp của cánh hoa anh đào mỏng manh rơi rụng.', content: 'Hoa anh đào không chỉ là biểu tượng của vẻ đẹp thiên nhiên rực rỡ mà còn khắc họa sâu sắc tâm hồn nghệ thuật, tinh thần võ sĩ đạo và triết lý chấp nhận sự ngắn ngủi của đời người để sống trọn vẹn từng giây phút.', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800', created_at: '2026-03-20 08:00' },
+                    { id: 2, title: 'Bí mật của trang phục Yukata và cách phân biệt với Kimono', category: 'Trang phục', author: 'Kimono Artisan', summary: 'Tránh những sai sót cơ bản khi chọn Yukata mùa hè thanh thoát thay vì Kimono trang trọng đa lớp.', content: 'Yukata là phiên bản kimono nhẹ nhàng hơn, thường làm bằng vải cotton mát mẻ, lý tưởng cho những lễ hội mùa hè Hanami hay dạo mát. Bài viết cung cấp góc nhìn đa chiều về cách thắt nút Obi nghệ thuật.', image: 'https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&q=80&w=800', created_at: '2026-03-21 09:15' },
+                    { id: 3, title: 'Tìm hiểu trà đạo matcha - Nghi lễ thanh lọc tâm hồn', category: 'Ẩm thực', author: 'Chasen Master', summary: 'Cách hòa mình vào bốn tôn chỉ của Trà Đạo Nhật Bản: Hòa - Kính - Thanh - Tịch.', content: 'Một chén chè xanh không đơn thuần là đồ uống mà là cả một buổi thiền định. Từng động tác lau chùi chén trà, múc bột, khuấy nước đều đòi hỏi sự tập trung chánh niệm cao độ.', image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&q=80&w=800', created_at: '2026-03-22 14:20' },
+                    { id: 4, title: 'Nguồn gốc truyền thuyết cây anh đào ma mị trong văn hóa dân gian', category: 'Truyền thuyết', author: 'Shinto Monk', summary: 'Những câu chuyện kỳ bí về linh hồn trú ẩn dưới cội rễ cây anh đào cổ thụ nghìn tuổi.', content: 'Người Nhật tin rằng mọi vật đều có linh hồn. Cây anh đào cổ thụ rực rỡ hoa là nơi hội tụ sinh khí của trời đất, mang những giai thoại tình yêu thủy chung đến nghẹn lòng.', image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=800', created_at: '2026-03-23 11:10' },
+                    { id: 5, title: 'Hành trình lịch sử thời đại Samurai và văn hóa Shogun', category: 'Lịch sử', author: 'Sengoku Historian', summary: 'Sự trỗi dậy của tầng lớp võ sĩ Samurai trung dũng và ảnh hưởng sâu rộng đến nước Nhật hiện đại.', content: 'Võ sĩ đạo Bushido đề cao lòng trung thành, danh dự vô giá và tinh thần tự chủ tuyệt đối, là nền tảng tinh thần thúc đẩy nước Nhật vươn lên thành cường quốc phát triển vượt bậc.', image: 'https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?auto=format&fit=crop&q=80&w=800', created_at: '2026-03-24 16:45' }
+                ];
+
+                // Cosplay Candidates Seed (5)
+                const cosplayCandidates = [
+                    { id: 1, name: 'Minh Thư (Mochi Chan)', character: 'Kamado Nezuko (Demon Slayer)', description: 'Nét đẹp ngây thơ, biểu cảm cực chuẩn với ống tre phong cách.', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400', votes: 142 },
+                    { id: 2, name: 'Hoàng Long (Ryu)', character: 'Roronoa Zoro (One Piece)', description: 'Ngầu lòi với ba thanh kiếm báu, thần thái võ sĩ bất khuất.', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400', votes: 98 },
+                    { id: 3, name: 'Khánh Linh', character: 'Sakura Kinomoto (Cardcaptor Sakura)', description: 'Đầm xòe hồng bồng bềnh, cầm gậy ngôi sao phép thuật lung linh.', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400', votes: 185 },
+                    { id: 4, name: 'Quốc Bảo', character: 'Uchiha Sasuke (Naruto)', description: 'Tóc vuốt dựng cá tính, Sharingan xoáy sâu huyền bí.', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400', votes: 110 },
+                    { id: 5, name: 'Hồng Hạnh', character: 'Rem (Re:Zero)', description: 'Người hầu tóc xanh da trời quốc dân với quả chùy hầm hố tương phản.', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400', votes: 156 }
+                ];
+
+                // Manga Candidates Seed (5)
+                const mangaCandidates = [
+                    { id: 6, name: 'Hành trình hoa đào nở', character: 'Tác giả: Tuấn Kiệt', description: 'One-shot kể về tình bạn vượt thời gian tại tháp sáng tạo.', image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&q=80&w=400', votes: 89 },
+                    { id: 7, name: 'Oán linh Chiyo siêu thoát', character: 'Tác giả: Minh Hà', description: 'Truyện tranh dựa trên cốt truyện nhà ma bí mật đầy nhân văn.', image: 'https://images.unsplash.com/photo-1560942485-b2a11cc13456?auto=format&fit=crop&q=80&w=400', votes: 120 },
+                    { id: 8, name: 'Robot và búp bê gỗ', character: 'Tác giả: Phương Nam', description: 'Chú robot AI đem lòng yêu búp bê Kokeshi tại sảnh Gigamall.', image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=400', votes: 74 },
+                    { id: 9, name: 'Chiếc quạt xếp thần kỳ', character: 'Tác giả: Ánh Tuyết', description: 'Mở quạt ra là du hành về thời Edo cổ kính đầy mộng mơ.', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=400', votes: 105 },
+                    { id: 10, name: 'Cậu bé Finger Math anh hùng', character: 'Tác giả: Bảo Lâm', description: 'Dùng ngón tay nhẩm toán để hóa giải các cạm bẫy của quái vật.', image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=400', votes: 93 }
+                ];
+
+                // Set database
+                localStorage.setItem('SAKURA_ACTIVITIES', JSON.stringify(activities));
+                localStorage.setItem('SAKURA_BOOTHS', JSON.stringify(booths));
+                localStorage.setItem('SAKURA_REVIEWS', JSON.stringify(reviews));
+                localStorage.setItem('SAKURA_ARTICLES', JSON.stringify(articles));
+                localStorage.setItem('SAKURA_COSP_CANDIDATES', JSON.stringify(cosplayCandidates));
+                localStorage.setItem('SAKURA_MANG_CANDIDATES', JSON.stringify(mangaCandidates));
+                
+                // Logs, Registrations state
+                localStorage.setItem('SAKURA_REGISTRATIONS', JSON.stringify([]));
+                localStorage.setItem('SAKURA_YUKATA_DESIGNS', JSON.stringify([]));
+                localStorage.setItem('SAKURA_HAUNTED_REGS', JSON.stringify([]));
+                localStorage.setItem('SAKURA_CHECKINS', JSON.stringify([]));
+                localStorage.setItem('SAKURA_VOTES', JSON.stringify({})); // map of userId -> list of candidateIds voted
+                localStorage.setItem('SAKURA_CHAT_HISTORY', JSON.stringify([]));
+                localStorage.setItem('SAKURA_COMMUNITY_COMMENTS', JSON.stringify([
+                    { id: 1, cat: 'cosplay', author: 'Lan Anh', text: 'Mọi người vote cho Khánh Linh nha, đồ may đẹp tỉ mỉ lắm!', time: 'Vừa xong' },
+                    { id: 2, cat: 'manga', author: 'Quốc Huy', text: 'Truyện oán linh Chiyo nét vẽ có chiều sâu và ý nghĩa ghê.', time: '5 phút trước' }
+                ]));
+
+                localStorage.setItem('SAKURA_DB_INITIALIZED', 'true');
+            },
+
+            getActivities() { return JSON.parse(localStorage.getItem('SAKURA_ACTIVITIES')); },
+            getBooths() { return JSON.parse(localStorage.getItem('SAKURA_BOOTHS')); },
+            getReviews() { return JSON.parse(localStorage.getItem('SAKURA_REVIEWS')); },
+            getArticles() { return JSON.parse(localStorage.getItem('SAKURA_ARTICLES')); },
+            getCospCandidates() { return JSON.parse(localStorage.getItem('SAKURA_COSP_CANDIDATES')); },
+            getMangCandidates() { return JSON.parse(localStorage.getItem('SAKURA_MANG_CANDIDATES')); },
+            getRegistrations() { return JSON.parse(localStorage.getItem('SAKURA_REGISTRATIONS')) || []; },
+            getYukataDesigns() { return JSON.parse(localStorage.getItem('SAKURA_YUKATA_DESIGNS')) || []; },
+            getHauntedRegs() { return JSON.parse(localStorage.getItem('SAKURA_HAUNTED_REGS')) || []; },
+            getCheckins() { return JSON.parse(localStorage.getItem('SAKURA_CHECKINS')) || []; },
+            getVotes() { return JSON.parse(localStorage.getItem('SAKURA_VOTES')) || {}; },
+            getCommunityComments() { return JSON.parse(localStorage.getItem('SAKURA_COMMUNITY_COMMENTS')) || []; },
+
+            saveData(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
+        };
+
+        MOCK_DB.init();
+    </script>
+
+    <!-- TRANSLATION SERVICE -->
+    <script>
+        const TRANSLATIONS = {
+            vi: {
+                home: "Trang chủ",
+                game: "Bản đồ Game",
+                yukata: "Trải nghiệm Yukata",
+                haunted: "Nhà ma kinh dị",
+                community: "Cộng đồng Cosplay",
+                culture: "Văn hóa Nhật",
+                history: "Lịch sử của tôi",
+                hero_title: "VÀO CỬA MIỄN PHÍ",
+                hero_subtitle: "LỄ HỘI HOA ANH ĐÀO GIGAMALL 2026",
+                hero_tagline: "“CUNG ĐƯỜNG VÀNG SAKURA”",
+                hero_desc: "Sự kiện văn hóa Nhật Bản được mong chờ nhất năm tại TTTM Gigamall. Hứa hẹn mang đến một không gian rực rỡ, kết hợp giữa truyền thống huyền ảo và công nghệ tương lai đỉnh cao!",
+                hero_time: "Thời gian: 21/03 – 03/05/2026",
+                hero_loc: "Địa điểm: Sảnh Phạm Văn Đồng – TTTM Gigamall",
+                register_required_alert: "Bạn cần phải đăng ký thông tin khách tham quan để vào website trải nghiệm toàn bộ tiện ích trực tuyến và tích điểm đổi quà!",
+                timeline_title: "Hành Trình Trải Nghiệm Lễ Hội",
+                timeline_sub: "Nhấp vào các mốc thời gian để xem các hoạt động rực rỡ",
+                activity_fee: "Phí tham gia",
+                activity_free: "Miễn phí",
+                register_act_btn: "Đăng ký tham gia ngay",
+                share_title: "Cảm Nhận Từ Du Khách",
+                share_sub: "Những chia sẻ chân thực từ hàng ngàn du khách ghé thăm",
+                add_review: "Gửi Đánh Giá Của Bạn",
+                rating_label: "Điểm đánh giá (Sao)",
+                review_placeholder: "Hãy chia sẻ cảm nghĩ, góp ý của bạn về lễ hội hoa anh đào...",
+                review_submit: "Gửi đánh giá",
+                review_success: "Cảm ơn bạn đã gửi đánh giá quý báu!",
+                gender_male: "Nam",
+                gender_female: "Nữ",
+                anonymous: "Khách tham quan",
+                payment_demo_title: "XÁC NHẬN ĐĂNG KÝ VÀ THANH TOÁN",
+                payment_transfer_instructions: "Vui lòng chuyển khoản đúng số tiền theo thông tin bên dưới để hoàn tất đăng ký hoạt động có phí.",
+                bank_acc: "Tài khoản thụ hưởng",
+                payment_done_btn: "Tôi đã chuyển khoản thành công",
+                reg_success_alert: "Đăng ký thành công! Một email xác nhận kèm mã vé điện tử QR đã được gửi về email của bạn.",
+                not_registered: "Chưa đăng ký",
+                registered: "Đã đăng ký",
+                vote_success: "Cảm ơn bạn đã bình chọn!",
+                voted_already: "Bạn đã bình chọn cho hạng mục này rồi!",
+                lang_changed: "Đã chuyển đổi sang Tiếng Việt",
+                contact_btc: "Liên hệ BTC đặt may",
+                contact_btc_placeholder: "Nhập số điện thoại/Zalo để BTC liên hệ...",
+                may_success: "Đã ghi nhận yêu cầu may Yukata thiết kế riêng của bạn! BTC sẽ liên hệ lại sớm nhất.",
+                upload_art: "Tải lên bản vẽ thiết kế Yukata của bạn"
+            },
+            en: {
+                home: "Home",
+                game: "Interactive Map",
+                yukata: "Yukata Experience",
+                haunted: "Haunted House",
+                community: "Cosplay & Manga",
+                culture: "Japanese Culture",
+                history: "My Activity History",
+                hero_title: "FREE ENTRANCE",
+                hero_subtitle: "CHERRY BLOSSOM FESTIVAL GIGAMALL 2026",
+                hero_tagline: "“SAKURA GOLDEN PATHWAY”",
+                hero_desc: "The most anticipated Japanese cultural event of the year at Gigamall Shopping Center. Promising a brilliant space combining mystical traditions and state-of-the-art futuristic technology!",
+                hero_time: "Time: March 21 – May 03, 2026",
+                hero_loc: "Location: Pham Van Dong Lobby – Gigamall Shopping Center",
+                register_required_alert: "You must register visitor information to access the website to enjoy online features and earn amazing rewards!",
+                timeline_title: "Festival Event Timeline",
+                timeline_sub: "Click on each timeline block to reveal amazing activities inside",
+                activity_fee: "Entrance fee",
+                activity_free: "Free",
+                register_act_btn: "Register to Join",
+                share_title: "Visitors Love Us",
+                share_sub: "Genuine feedback from thousands of sakura lovers",
+                add_review: "Write Your Review",
+                rating_label: "Your Rating (Stars)",
+                review_placeholder: "Share your thoughts and feedback about the sakura festival...",
+                review_submit: "Submit Review",
+                review_success: "Thank you for sharing your valuable review!",
+                gender_male: "Male",
+                gender_female: "Female",
+                anonymous: "Visitor",
+                payment_demo_title: "CONFIRM REGISTRATION & PAYMENT",
+                payment_transfer_instructions: "Please make a bank transfer of the exact amount below to complete your premium activity reservation.",
+                bank_acc: "Receiving Bank Account",
+                payment_done_btn: "I have transferred the money",
+                reg_success_alert: "Registration successful! A confirmation email with QR digital ticket has been sent to your email inbox.",
+                not_registered: "Not registered",
+                registered: "Registered",
+                vote_success: "Thank you for voting!",
+                voted_already: "You have already voted in this category!",
+                lang_changed: "Switched language to English",
+                contact_btc: "Contact Organizer to Tailor",
+                contact_btc_placeholder: "Enter phone number/Zalo for contact...",
+                may_success: "We received your custom-tailored Yukata design request! We will contact you shortly.",
+                upload_art: "Upload your custom Yukata sketch art"
+            }
+        };
+
+        let CURRENT_LANG = localStorage.getItem('SAKURA_LANG') || 'vi';
+
+        function toggleLanguage() {
+            CURRENT_LANG = CURRENT_LANG === 'vi' ? 'en' : 'vi';
+            localStorage.setItem('SAKURA_LANG', CURRENT_LANG);
+            document.getElementById('lang-label').innerText = CURRENT_LANG.toUpperCase();
+            
+            // Re-render UI
+            initLayout();
+            renderCurrentView();
+            
+            // Toast notification
+            showToast(TRANSLATIONS[CURRENT_LANG].lang_changed);
+        }
+
+        function t(key) {
+            return TRANSLATIONS[CURRENT_LANG][key] || key;
+        }
+    </script>
+
+    <!-- STATE MANAGEMENT & ROUTER SIMULATOR -->
+    <script>
+        let currentUser = JSON.parse(localStorage.getItem('SAKURA_USER')) || null;
+        let currentView = 'home'; // Views: home, game, yukata, haunted, community, culture, history, login, activity-detail, booth-detail, article-detail, article-create
+        let selectedActivityId = null;
+        let selectedBoothId = null;
+        let selectedArticleId = null;
+
+        // Custom global Toast
+        function showToast(msg, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 right-6 z-50 px-6 py-3 rounded-xl shadow-xl text-white font-semibold flex items-center space-x-2 transition-all duration-300 transform translate-y-[-20px] opacity-0 ${
+                type === 'success' ? 'bg-emerald-500' : 'bg-rose-500'
+            }`;
+            toast.innerHTML = `<i data-lucide="${type === 'success' ? 'circle-check' : 'alert-circle'}" class="w-5 h-5"></i><span>${msg}</span>`;
+            document.body.appendChild(toast);
+            lucide.createIcons();
+            
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('translate-y-[-20px]', 'opacity-0');
+            }, 50);
+
+            // Animate out
+            setTimeout(() => {
+                toast.classList.add('translate-y-[-20px]', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // Navigation Dispatcher
+        function navigate(view, params = {}) {
+            // Guard: Must register/login to enter any pages except login
+            if (!currentUser && view !== 'login') {
+                showToast(t('register_required_alert'), 'error');
+                currentView = 'login';
+            } else {
+                currentView = view;
+            }
+
+            // Route params extractor
+            if (view === 'activity-detail') selectedActivityId = params.id;
+            if (view === 'booth-detail') selectedBoothId = params.id;
+            if (view === 'article-detail') selectedArticleId = params.id;
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Render Nav & View
+            initLayout();
+            renderCurrentView();
+
+            // Auto close mobile menu
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const mm = document.getElementById('mobile-menu');
+            mm.classList.toggle('hidden');
+        }
+    </script>
+
+    <!-- CORE LAYOUT BUILDER -->
+    <script>
+        function initLayout() {
+            // Desktop Menu render
+            const desktopNav = document.getElementById('nav-desktop');
+            const mobileNav = document.getElementById('nav-mobile');
+            
+            const menuItems = [
+                { id: 'home', label: t('home'), icon: 'home' },
+                { id: 'game', label: t('game'), icon: 'map' },
+                { id: 'yukata', label: t('yukata'), icon: 'sparkles' },
+                { id: 'haunted', label: t('haunted'), icon: 'ghost' },
+                { id: 'community', label: t('community'), icon: 'users-2' },
+                { id: 'culture', label: t('culture'), icon: 'book-open' },
+                { id: 'history', label: t('history'), icon: 'history' }
+            ];
+
+            let dHtml = '';
+            let mHtml = '';
+
+            menuItems.forEach(item => {
+                const isActive = currentView === item.id;
+                const dClass = isActive 
+                    ? "bg-pink-500 text-white font-bold px-4 py-2 rounded-full text-sm transition-all"
+                    : "text-slate-600 hover:text-pink-600 hover:bg-pink-50/50 px-3 py-2 rounded-full text-sm font-semibold transition-all";
+                const mClass = isActive
+                    ? "bg-pink-500 text-white font-bold px-4 py-2.5 rounded-xl text-sm block"
+                    : "text-slate-600 hover:text-pink-600 hover:bg-pink-50 px-4 py-2.5 rounded-xl text-sm font-semibold block";
+
+                dHtml += `<button onclick="navigate('${item.id}')" class="${dClass} flex items-center space-x-1.5"><i data-lucide="${item.icon}" class="w-4 h-4"></i><span>${item.label}</span></button>`;
+                mHtml += `<button onclick="navigate('${item.id}')" class="${mClass} w-full text-left flex items-center space-x-2"><i data-lucide="${item.icon}" class="w-4 h-4"></i><span>${item.label}</span></button>`;
+            });
+
+            desktopNav.innerHTML = dHtml;
+            mobileNav.innerHTML = mHtml;
+
+            // User header section
+            const userArea = document.getElementById('user-header-area');
+            if (currentUser) {
+                userArea.innerHTML = `
+                    <div class="flex items-center space-x-2 bg-pink-50 border border-pink-100 rounded-full py-1 pl-1 pr-3 shadow-sm">
+                        <div class="w-8 h-8 rounded-full bg-pink-600 text-white flex items-center justify-center font-bold text-sm">
+                            ${currentUser.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div class="hidden sm:block text-left">
+                            <span class="block text-xs font-bold text-pink-700 leading-tight">${currentUser.name}</span>
+                            <span class="block text-[9px] text-slate-400 font-semibold tracking-wider">ID: ${currentUser.unique_code}</span>
+                        </div>
+                        <button onclick="logoutDemo()" class="text-slate-400 hover:text-rose-500 pl-1">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+            } else {
+                userArea.innerHTML = `
+                    <button onclick="navigate('login')" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg shadow-pink-200 hover:scale-105 transition-all">
+                        Đăng ký Vé
+                    </button>
+                `;
+            }
+
+            lucide.createIcons();
+        }
+
+        function logoutDemo() {
+            localStorage.removeItem('SAKURA_USER');
+            currentUser = null;
+            showToast("Đã đăng xuất tài khoản Demo.", "error");
+            navigate('login');
+        }
+    </script>
+
+    <!-- COMPONENT: VIEWS RENDERING -->
+    <script>
+        function renderCurrentView() {
+            const container = document.getElementById('main-content');
+            
+            if (currentView === 'login') {
+                container.innerHTML = viewLogin();
+            } else if (currentView === 'home') {
+                container.innerHTML = viewHome();
+                setupHomeEvents();
+            } else if (currentView === 'activity-detail') {
+                container.innerHTML = viewActivityDetail(selectedActivityId);
+            } else if (currentView === 'game') {
+                container.innerHTML = viewGame();
+            } else if (currentView === 'booth-detail') {
+                container.innerHTML = viewBoothDetail(selectedBoothId);
+            } else if (currentView === 'yukata') {
+                container.innerHTML = viewYukata();
+                setupYukataListeners();
+            } else if (currentView === 'haunted') {
+                container.innerHTML = viewHaunted();
+            } else if (currentView === 'community') {
+                container.innerHTML = viewCommunity();
+                setupCommunityListeners();
+            } else if (currentView === 'culture') {
+                container.innerHTML = viewCulture();
+            } else if (currentView === 'article-detail') {
+                container.innerHTML = viewArticleDetail(selectedArticleId);
+            } else if (currentView === 'article-create') {
+                container.innerHTML = viewArticleCreate();
+            } else if (currentView === 'history') {
+                container.innerHTML = viewHistory();
+            }
+
+            lucide.createIcons();
+        }
+    </script>
+
+    <!-- VIEW 1: REGISTRATION & LOGIN (login.html) -->
+    <script>
+        function viewLogin() {
+            return `
+                <div class="max-w-4xl mx-auto my-6 bg-white rounded-3xl shadow-2xl border border-pink-100 overflow-hidden grid grid-cols-1 md:grid-cols-12">
+                    <!-- Left Hero Banner -->
+                    <div class="md:col-span-5 bg-gradient-to-br from-pink-500 to-purple-700 text-white p-8 flex flex-col justify-between relative overflow-hidden min-h-[300px]">
+                        <!-- decorative pattern -->
+                        <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-white/10 rounded-full blur-xl"></div>
+                        <div class="absolute left-6 top-1/4 w-32 h-32 bg-pink-400/20 rounded-full blur-lg"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex items-center space-x-2 text-white/90 mb-6">
+                                <i data-lucide="flower-2" class="w-8 h-8 animate-pulse"></i>
+                                <span class="font-bold text-lg tracking-wider">SAKURA GIGAMALL</span>
+                            </div>
+                            <h2 class="text-2xl font-extrabold leading-snug">Khám Phá Cung Đường Hoa Đào Huyền Ảo</h2>
+                            <p class="text-sm text-pink-100 mt-3 leading-relaxed">Đăng ký thành viên tham quan miễn phí để tích lũy con dấu, trải nghiệm phòng ma quái, bình chọn cosplay và nhận quà lưu niệm Nhật Bản đặc sắc!</p>
+                        </div>
+                        
+                        <div class="text-xs text-pink-200/80 relative z-10 border-t border-white/20 pt-4">
+                            Hỗ trợ bởi hệ sinh thái chăm sóc khách hàng thông minh Gigamall CRM.
+                        </div>
+                    </div>
+
+                    <!-- Right Form Container -->
+                    <div class="md:col-span-7 p-8">
+                        <!-- Alert block -->
+                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 flex items-start space-x-3 text-xs text-amber-800 mb-6 font-semibold">
+                            <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 shrink-0 mt-0.5"></i>
+                            <span>${t('register_required_alert')}</span>
+                        </div>
+
+                        <!-- Tab headers -->
+                        <div class="flex border-b border-slate-100 mb-6">
+                            <button onclick="toggleFormType('reg')" id="tab-reg-btn" class="flex-1 text-center pb-3 text-sm font-bold border-b-2 border-pink-500 text-pink-600">ĐĂNG KÝ</button>
+                            <button onclick="toggleFormType('login')" id="tab-login-btn" class="flex-1 text-center pb-3 text-sm font-semibold text-slate-400 hover:text-slate-600 border-b-2 border-transparent">ĐĂNG NHẬP MÃ SỐ</button>
+                        </div>
+
+                        <!-- Registration Form -->
+                        <form id="reg-form" onsubmit="handleRegistration(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Họ và Tên</label>
+                                    <input type="text" id="reg-name" required placeholder="Nguyễn Văn A" class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Giới Tính</label>
+                                    <select id="reg-gender" class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none">
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                        <option value="Khác">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Năm Sinh</label>
+                                    <input type="number" id="reg-birth" required min="1950" max="2026" placeholder="2000" class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Số Điện Thoại</label>
+                                    <input type="tel" id="reg-phone" required placeholder="0901234567" class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Email Nhận Vé Điện Tử</label>
+                                <input type="email" id="reg-email" required placeholder="nhanve@gmail.com" class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none">
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-slate-100 pt-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Tên đăng nhập</label>
+                                    <input type="text" id="reg-user" required placeholder="sakurafan" class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Mật khẩu</label>
+                                    <input type="password" id="reg-pass" required placeholder="••••••••" class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none">
+                                </div>
+                            </div>
+
+                            <div class="bg-pink-50 rounded-xl p-3 text-center border border-pink-100">
+                                <span class="block text-[10px] uppercase font-bold text-pink-500 tracking-wider">Mã Số Giao Lộ Đăng Ký Tự Động</span>
+                                <span class="block text-lg font-black text-slate-800 tracking-widest mt-0.5" id="unique-code-preview">SAKURA-82937</span>
+                            </div>
+
+                            <button type="submit" class="w-full py-3 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold rounded-xl text-sm shadow-xl shadow-pink-200 hover:scale-[1.01] transition-all flex items-center justify-center space-x-2">
+                                <i data-lucide="ticket" class="w-5 h-5"></i>
+                                <span>ĐĂNG KÝ</span>
+                            </button>
+                        </form>
+
+                        <!-- Login Form -->
+                        <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5 hidden">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Tên Đăng Nhập / Mã Số</label>
+                                <input type="text" id="login-user" required placeholder="Mã số SAKURA-... hoặc tên đăng nhập" class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Mật Khẩu</label>
+                                <input type="password" id="login-pass" required placeholder="••••••••" class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none">
+                            </div>
+
+                            <button type="submit" class="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white font-bold rounded-xl text-sm shadow-xl shadow-purple-200 hover:scale-[1.01] transition-all flex items-center justify-center space-x-2">
+                                <i data-lucide="log-in" class="w-5 h-5"></i>
+                                <span>ĐĂNG NHẬP TRẢI NGHIỆM</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Live Generate dynamic unique code
+        let tempCode = "SAKURA-" + Math.floor(10000 + Math.random() * 90000);
+        setInterval(() => {
+            const previewEl = document.getElementById('unique-code-preview');
+            if (previewEl) {
+                tempCode = "SAKURA-" + Math.floor(10000 + Math.random() * 90000);
+                previewEl.innerText = tempCode;
+            }
+        }, 3000);
+
+        function toggleFormType(type) {
+            const rForm = document.getElementById('reg-form');
+            const lForm = document.getElementById('login-form');
+            const rBtn = document.getElementById('tab-reg-btn');
+            const lBtn = document.getElementById('tab-login-btn');
+
+            if (type === 'reg') {
+                rForm.classList.remove('hidden');
+                lForm.classList.add('hidden');
+                rBtn.className = "flex-1 text-center pb-3 text-sm font-bold border-b-2 border-pink-500 text-pink-600";
+                lBtn.className = "flex-1 text-center pb-3 text-sm font-semibold text-slate-400 hover:text-slate-600 border-b-2 border-transparent";
+            } else {
+                rForm.classList.add('hidden');
+                lForm.classList.remove('hidden');
+                lBtn.className = "flex-1 text-center pb-3 text-sm font-bold border-b-2 border-pink-500 text-pink-600";
+                rBtn.className = "flex-1 text-center pb-3 text-sm font-semibold text-slate-400 hover:text-slate-600 border-b-2 border-transparent";
+            }
+        }
+
+        function handleRegistration(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const gender = document.getElementById('reg-gender').value;
+            const birth = document.getElementById('reg-birth').value;
+            const phone = document.getElementById('reg-phone').value;
+            const email = document.getElementById('reg-email').value;
+            const user = document.getElementById('reg-user').value;
+            const pass = document.getElementById('reg-pass').value;
+
+            const newUser = {
+                id: Date.now(),
+                name,
+                gender,
+                birth_year: birth,
+                phone,
+                email,
+                username: user,
+                password: pass,
+                unique_code: tempCode
+            };
+
+            // Save user globally
+            localStorage.setItem('SAKURA_USER', JSON.stringify(newUser));
+            currentUser = newUser;
+            
+            // Simulating Email sent using log to showcase flow clearly
+            console.log(`[EMAIL DISPATCH] Sent to ${email}: Hello ${name}, welcome to Sakura Festival 2026. Your dynamic ID code is ${tempCode}.`);
+            
+            showToast(`Chào mừng ${name}! Một vé điện tử chứa mã ${tempCode} đã được gửi tới email ${email}!`, "success");
+            navigate('home');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const userVal = document.getElementById('login-user').value;
+            const passVal = document.getElementById('login-pass').value;
+
+            // Simple match or fallback register since it is demo
+            const localUser = JSON.parse(localStorage.getItem('SAKURA_USER'));
+            if (localUser && (localUser.username === userVal || localUser.unique_code === userVal) && localUser.password === passVal) {
+                currentUser = localUser;
+                showToast(`Chào mừng quay trở lại, ${currentUser.name}!`, "success");
+                navigate('home');
+            } else {
+                // Mock registration bypass for easy student marking/demo
+                const fallbackUser = {
+                    id: Date.now(),
+                    name: userVal.split('-')[0] || "Khách Quen",
+                    gender: "Nam",
+                    birth_year: "1999",
+                    phone: "0901234567",
+                    email: "demove@gigamall.com.vn",
+                    username: userVal,
+                    password: passVal,
+                    unique_code: userVal.startsWith("SAKURA-") ? userVal : "SAKURA-" + Math.floor(10000 + Math.random() * 90000)
+                };
+                localStorage.setItem('SAKURA_USER', JSON.stringify(fallbackUser));
+                currentUser = fallbackUser;
+                showToast(`Bypass đăng nhập Demo thành công!`, "success");
+                navigate('home');
+            }
+        }
+    </script>
+
+    <!-- VIEW 2: HOME & TIMELINE (home.html) -->
+    <script>
+        let currentTimelineTab = 'hanami'; // Default to Hanami phase
+
+        function viewHome() {
+            const allReviews = MOCK_DB.getReviews();
+            
+            return `
+                <!-- Hero section -->
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-slate-900 text-white py-20 px-8 md:px-16 mb-12">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-40 mix-blend-overlay" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-pink-900/90 to-purple-950/70 z-10"></div>
+                    
+                    <div class="relative z-20 max-w-3xl space-y-6">
+                        <span class="inline-flex items-center space-x-2 bg-pink-500 text-white font-extrabold text-xs tracking-widest uppercase px-4 py-1.5 rounded-full shadow-lg shadow-pink-500/30">
+                            <i data-lucide="gift" class="w-3.5 h-3.5 animate-bounce"></i>
+                            <span>${t('hero_title')}</span>
+                        </span>
+                        
+                        <h1 class="text-3xl md:text-5xl font-black tracking-tight leading-tight uppercase">
+                            ${t('hero_subtitle')} <br>
+                            <span class="text-pink-400 bg-clip-text bg-gradient-to-r from-pink-300 to-amber-300 text-transparent">${t('hero_tagline')}</span>
+                        </h1>
+                        
+                        <p class="text-slate-200 text-sm md:text-base leading-relaxed font-light">
+                            ${t('hero_desc')}
+                        </p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10 text-xs md:text-sm font-semibold">
+                            <div class="flex items-center space-x-3 text-pink-300">
+                                <i data-lucide="calendar" class="w-5 h-5 shrink-0"></i>
+                                <span>${t('hero_time')}</span>
+                            </div>
+                            <div class="flex items-center space-x-3 text-amber-300">
+                                <i data-lucide="map-pin" class="w-5 h-5 shrink-0"></i>
+                                <span>${t('hero_loc')}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline / Lịch trình dự kiến chi tiết -->
+                <section class="mb-12 bg-white rounded-3xl p-8 border border-pink-100 shadow-xl">
+                    <div class="text-center max-w-2xl mx-auto mb-10">
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-pink-600 tracking-tight flex items-center justify-center gap-2">
+                            <i data-lucide="hourglass" class="w-7 h-7 text-pink-500"></i>
+                            <span>${t('timeline_title')}</span>
+                        </h2>
+                        <p class="text-slate-400 text-sm mt-1">${t('timeline_sub')}</p>
+                    </div>
+
+                    <!-- Timeline Period tabs -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+                        <button onclick="changeTimelineTab('hanami')" id="time-tab-hanami" class="px-4 py-3 rounded-2xl text-xs md:text-sm font-bold text-center border-2 transition-all shadow-md">
+                            🌸 Hanami <br>
+                            <span class="text-[10px] font-normal">21.3 - 29.3</span>
+                        </button>
+                        <button onclick="changeTimelineTab('culinary')" id="time-tab-culinary" class="px-4 py-3 rounded-2xl text-xs md:text-sm font-bold text-center border-2 transition-all shadow-md">
+                            🍱 Ẩm thực <br>
+                            <span class="text-[10px] font-normal">30.3 - 12.4</span>
+                        </button>
+                        <button onclick="changeTimelineTab('culture')" id="time-tab-culture" class="px-4 py-3 rounded-2xl text-xs md:text-sm font-bold text-center border-2 transition-all shadow-md">
+                            👘 Văn hóa <br>
+                            <span class="text-[10px] font-normal">13.4 - 27.4</span>
+                        </button>
+                        <button onclick="changeTimelineTab('hitech')" id="time-tab-hitech" class="px-4 py-3 rounded-2xl text-xs md:text-sm font-bold text-center border-2 transition-all shadow-md">
+                            🤖 Hi-Tech <br>
+                            <span class="text-[10px] font-normal">28.4 - 3.5</span>
+                        </button>
+                    </div>
+
+                    <!-- Timeline Activities Display dynamic list -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="timeline-activities-container">
+                        <!-- Loaded through setupHomeEvents -->
+                    </div>
+                </section>
+
+                <!-- Recommendation / Đề xuất cá nhân hóa nổi bật -->
+                <section class="mb-12">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-pink-500 rounded-2xl text-white flex items-center justify-center shadow-lg shadow-pink-100">
+                            <i data-lucide="star" class="w-5 h-5 fill-white"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl md:text-2xl font-extrabold text-slate-800">Đề Xuất Hoạt Động Nổi Bật</h2>
+                            <p class="text-xs text-slate-400">Gợi ý dành riêng cho bạn dựa trên mốc thời gian hấp dẫn nhất</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="home-recommendations">
+                        <!-- Loaded through setupHomeEvents -->
+                    </div>
+                </section>
+
+                <!-- Visitors' feedback -->
+                <section class="mb-12 bg-pink-50/50 rounded-3xl p-8 border border-pink-100/50">
+                    <div class="text-center max-w-2xl mx-auto mb-10">
+                        <h2 class="text-2xl font-extrabold text-slate-800 tracking-tight">${t('share_title')}</h2>
+                        <p class="text-slate-400 text-sm mt-1">${t('share_sub')}</p>
+                    </div>
+
+                    <!-- Reviews feed -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="reviews-list">
+                        <!-- Render reviews -->
+                    </div>
+
+                    <!-- Add Review form -->
+                    <div class="bg-white rounded-2xl p-6 border border-pink-100 shadow-lg max-w-xl mx-auto">
+                        <h4 class="font-bold text-pink-600 mb-4 flex items-center justify-center gap-2">
+                            <i data-lucide="pencil-line" class="w-5 h-5 text-pink-500"></i>
+                            <span>${t('add_review')}</span>
+                        </h4>
+                        
+                        <form onsubmit="handleReviewSubmit(event)" class="space-y-4 text-xs sm:text-sm">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Giới Tính</label>
+                                    <select id="rev-gender" class="w-full border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-pink-500">
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                        <option value="Khác">Khác</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Độ tuổi</label>
+                                    <input type="number" id="rev-age" value="20" required class="w-full border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-pink-500">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Phường/Xã cư trú (TP.HCM)</label>
+                                    <input type="text" id="rev-ward" required placeholder="Ví dụ: P. Hiệp Bình Chánh, Thủ Đức" class="w-full border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-pink-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">${t('rating_label')}</label>
+                                    <select id="rev-rating" class="w-full border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-pink-500">
+                                        <option value="5">⭐⭐⭐⭐⭐ - Rất thích</option>
+                                        <option value="4">⭐⭐⭐⭐ - Hài lòng</option>
+                                        <option value="3">⭐⭐⭐ - Bình thường</option>
+                                        <option value="2">⭐⭐ - Chưa ưng ý</option>
+                                        <option value="1">⭐ - Rất kém</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Nội dung chia sẻ</label>
+                                <textarea id="rev-content" rows="3" required placeholder="${t('review_placeholder')}" class="w-full border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-pink-500"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-2.5 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-pink-100 flex items-center justify-center space-x-2">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span>${t('review_submit')}</span>
+                            </button>
+                        </form>
+                    </div>
+                </section>
+            `;
+        }
+
+        function changeTimelineTab(tabName) {
+            currentTimelineTab = tabName;
+            setupHomeEvents();
+        }
+
+        function setupHomeEvents() {
+            // Manage Active tabs classes
+            const tabs = ['hanami', 'culinary', 'culture', 'hitech'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`time-tab-${t}`);
+                if (btn) {
+                    if (t === currentTimelineTab) {
+                        btn.className = "px-4 py-3 rounded-2xl text-xs md:text-sm font-bold text-center border-2 border-pink-500 bg-pink-500 text-white transition-all shadow-md shadow-pink-200";
+                    } else {
+                        btn.className = "px-4 py-3 rounded-2xl text-xs md:text-sm font-bold text-center border-2 border-pink-100 bg-white hover:bg-pink-50 text-slate-600 transition-all shadow-sm";
+                    }
+                }
+            });
+
+            // Filter activities for this tab phase
+            const allActs = MOCK_DB.getActivities();
+            const filtered = allActs.filter(a => a.section === currentTimelineTab);
+            const listContainer = document.getElementById('timeline-activities-container');
+            
+            if (listContainer) {
+                if (filtered.length === 0) {
+                    listContainer.innerHTML = `<div class="col-span-2 text-center py-10 text-slate-400">Không tìm thấy hoạt động nào trong mốc này.</div>`;
+                } else {
+                    listContainer.innerHTML = filtered.map(act => `
+                        <div class="bg-pink-50/20 hover:bg-pink-50/50 rounded-2xl border border-pink-100/60 p-5 flex flex-col justify-between transition-all hover:scale-[1.01] hover:shadow-md cursor-pointer" onclick="navigate('activity-detail', {id: ${act.id}})">
+                            <div class="flex gap-4">
+                                <div class="w-20 h-20 bg-cover bg-center rounded-xl shrink-0" style="background-image: url('${act.banner}')"></div>
+                                <div class="space-y-1.5 flex-grow">
+                                    <span class="inline-block bg-pink-100 text-pink-700 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full">
+                                        ${act.fee === 0 ? t('activity_free') : `${act.fee.toLocaleString()} VND`}
+                                    </span>
+                                    <h3 class="font-extrabold text-sm sm:text-base text-slate-800 line-clamp-1">${act.title}</h3>
+                                    <p class="text-xs text-slate-500 line-clamp-2">${act.desc}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between border-t border-slate-100/80 pt-3 mt-4 text-[11px] text-slate-400 font-semibold">
+                                <div class="flex items-center space-x-1">
+                                    <i data-lucide="clock" class="w-3.5 h-3.5 text-pink-400"></i>
+                                    <span>${act.time}</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-pink-400"></i>
+                                    <span>${act.location}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            // Fill Recommendations (Pick 3 prominent activities)
+            const recContainer = document.getElementById('home-recommendations');
+            if (recContainer) {
+                const recs = allActs.slice(0, 3);
+                recContainer.innerHTML = recs.map(rec => `
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer" onclick="navigate('activity-detail', {id: ${rec.id}})">
+                        <div class="relative h-44 bg-cover bg-center" style="background-image: url('${rec.banner}')">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
+                            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-pink-600 font-extrabold text-[10px] uppercase px-3 py-1 rounded-full shadow-md">
+                                ${rec.fee === 0 ? t('activity_free') : `${rec.fee.toLocaleString()} VND`}
+                            </span>
+                            <div class="absolute bottom-3 left-3 right-3 text-white">
+                                <span class="text-[10px] font-bold text-pink-300 block uppercase tracking-widest">${rec.dateRange}</span>
+                                <h3 class="font-bold text-sm sm:text-base line-clamp-1">${rec.title}</h3>
+                            </div>
+                        </div>
+                        <div class="p-4 space-y-3">
+                            <p class="text-xs text-slate-400 line-clamp-2">${rec.desc}</p>
+                            <div class="flex justify-between items-center text-[10px] text-slate-500 border-t border-slate-50 pt-2 font-semibold">
+                                <span class="flex items-center space-x-1">
+                                    <i data-lucide="clock" class="w-3 h-3"></i>
+                                    <span>${rec.time}</span>
+                                </span>
+                                <span class="flex items-center space-x-1">
+                                    <i data-lucide="map-pin" class="w-3 h-3"></i>
+                                    <span>${rec.location}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Render reviews
+            renderReviewsSection();
+            lucide.createIcons();
+        }
+
+        function renderReviewsSection() {
+            const list = document.getElementById('reviews-list');
+            if (!list) return;
+
+            const reviews = MOCK_DB.getReviews();
+            list.innerHTML = reviews.map(rev => `
+                <div class="bg-white rounded-2xl p-5 border border-pink-100/50 shadow-sm flex flex-col justify-between">
+                    <p class="text-xs italic text-slate-600">"${rev.content}"</p>
+                    <div class="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between text-[11px]">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-7 h-7 rounded-full bg-pink-100 text-pink-500 flex items-center justify-center font-bold">
+                                ${rev.gender === 'Nam' ? '👦' : '👧'}
+                            </div>
+                            <div>
+                                <span class="block font-bold text-slate-700">${rev.user_name} (${rev.age}t, ${rev.gender})</span>
+                                <span class="block text-[9px] text-slate-400">${rev.ward}</span>
+                            </div>
+                        </div>
+                        <span class="text-amber-400 font-bold">
+                            ${'★'.repeat(rev.rating)}${'☆'.repeat(5 - rev.rating)}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleReviewSubmit(e) {
+            e.preventDefault();
+            const gender = document.getElementById('rev-gender').value;
+            const age = parseInt(document.getElementById('rev-age').value);
+            const ward = document.getElementById('rev-ward').value;
+            const rating = parseInt(document.getElementById('rev-rating').value);
+            const content = document.getElementById('rev-content').value;
+
+            const reviews = MOCK_DB.getReviews();
+            const newRev = {
+                id: Date.now(),
+                user_name: 'Khách ẩn danh',
+                gender,
+                age,
+                ward,
+                rating,
+                content,
+                created_at: 'Vừa xong'
+            };
+
+            reviews.unshift(newRev); // Add to beginning
+            MOCK_DB.saveData('SAKURA_REVIEWS', reviews);
+            
+            showToast(t('review_success'), 'success');
+            
+            // Clear inputs
+            document.getElementById('rev-content').value = '';
+            
+            // Refresh
+            renderReviewsSection();
+        }
+    </script>
+
+    <!-- VIEW 3: ACTIVITY DETAIL (activity-detail.html) -->
+    <script>
+        function viewActivityDetail(id) {
+            const act = MOCK_DB.getActivities().find(a => a.id === parseInt(id));
+            if (!act) return `<div class="text-center py-20">Không tìm thấy hoạt động này.</div>`;
+
+            const hasReg = MOCK_DB.getRegistrations().some(r => r.actId === act.id && r.userId === currentUser.id);
+
+            return `
+                <div class="max-w-4xl mx-auto">
+                    <!-- Nav Back -->
+                    <button onclick="navigate('home')" class="mb-6 flex items-center space-x-1.5 text-pink-600 hover:text-pink-700 font-bold text-sm">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        <span>Quay lại trang sự kiện</span>
+                    </button>
+
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-pink-100 grid grid-cols-1 md:grid-cols-12">
+                        <!-- Image & Brief -->
+                        <div class="md:col-span-5 bg-cover bg-center min-h-[250px]" style="background-image: url('${act.banner}')"></div>
+                        
+                        <!-- Content details -->
+                        <div class="md:col-span-7 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+                            <div>
+                                <span class="inline-block bg-pink-100 text-pink-700 text-xs font-bold uppercase px-3 py-1 rounded-full mb-3">
+                                    ${act.fee === 0 ? t('activity_free') : `${act.fee.toLocaleString()} VND`}
+                                </span>
+                                <h1 class="text-xl sm:text-2xl font-black text-slate-800 leading-tight">${act.title}</h1>
+                                <p class="text-xs sm:text-sm text-slate-500 mt-4 leading-relaxed">${act.desc}</p>
+                            </div>
+
+                            <div class="space-y-3 pt-4 border-t border-slate-100 text-xs sm:text-sm">
+                                <div class="flex items-center space-x-3 text-slate-600 font-semibold">
+                                    <i data-lucide="calendar" class="w-5 h-5 text-pink-500 shrink-0"></i>
+                                    <span>Mốc giai đoạn: ${act.dateRange}</span>
+                                </div>
+                                <div class="flex items-center space-x-3 text-slate-600 font-semibold">
+                                    <i data-lucide="clock" class="w-5 h-5 text-pink-500 shrink-0"></i>
+                                    <span>Thời gian cụ thể: ${act.time}</span>
+                                </div>
+                                <div class="flex items-center space-x-3 text-slate-600 font-semibold">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-pink-500 shrink-0"></i>
+                                    <span>Vị trí cụ thể: ${act.location}</span>
+                                </div>
+                            </div>
+
+                            <!-- Register Block -->
+                            <div class="pt-4">
+                                ${hasReg ? `
+                                    <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold rounded-2xl p-4 text-center flex items-center justify-center space-x-2">
+                                        <i data-lucide="check-circle" class="w-5 h-5 text-emerald-600"></i>
+                                        <span>Bạn đã đăng ký tham gia hoạt động này! Vé QR đã lưu trong Lịch sử.</span>
+                                    </div>
+                                ` : `
+                                    <button onclick="openActivityRegistration(${act.id})" class="w-full py-3 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-extrabold rounded-2xl shadow-lg shadow-pink-200 hover:scale-[1.01] transition-all flex items-center justify-center space-x-2">
+                                        <i data-lucide="ticket-plus" class="w-5 h-5"></i>
+                                        <span>ĐĂNG KÝ VÀ NHẬN VÉ ĐIỆN TỬ</span>
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Modal simulator if premium activity -->
+                    <div id="payment-modal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+                        <div class="bg-white rounded-3xl shadow-2xl border border-pink-100 max-w-md w-full p-6 text-sm">
+                            <div class="text-center mb-4">
+                                <h3 class="text-lg font-black text-pink-600 uppercase tracking-tight">${t('payment_demo_title')}</h3>
+                                <p class="text-xs text-slate-400 mt-1">${t('payment_transfer_instructions')}</p>
+                            </div>
+
+                            <div class="bg-slate-50 rounded-2xl p-4 space-y-3.5 mb-5 border border-slate-100">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200/50">
+                                    <span class="text-xs text-slate-400 uppercase font-bold">Số tiền</span>
+                                    <span class="text-lg font-black text-rose-500" id="payment-modal-fee">50.000 VND</span>
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="block text-[10px] text-slate-400 uppercase font-bold">${t('bank_acc')}</span>
+                                    <span class="block text-xs font-bold text-slate-700" id="payment-modal-bank">Vietcombank - 1012345678 - Sakura Gigamall</span>
+                                </div>
+                                <div class="flex justify-center pt-2">
+                                    <img src="" id="payment-modal-qr" class="w-40 h-40 border border-slate-200 rounded-xl shadow-inner p-1 bg-white" alt="Chuyển khoản QR">
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <button onclick="closePaymentModal()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition-all">Hủy</button>
+                                <button onclick="confirmRegistrationPayment()" class="flex-1 py-2.5 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-pink-100 flex items-center justify-center space-x-1.5">
+                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                    <span>${t('payment_done_btn')}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        let pendingRegisterActId = null;
+
+        function openActivityRegistration(id) {
+            const act = MOCK_DB.getActivities().find(a => a.id === id);
+            if (!act) return;
+
+            if (act.fee === 0) {
+                // Free act, register instantly
+                saveRegistration(act.id, act.title, 0);
+            } else {
+                // Paid act, show payment/transfer popup
+                pendingRegisterActId = act.id;
+                document.getElementById('payment-modal-fee').innerText = `${act.fee.toLocaleString()} VND`;
+                document.getElementById('payment-modal-bank').innerText = act.bankInfo;
+                document.getElementById('payment-modal-qr').src = act.qrImage;
+                document.getElementById('payment-modal').classList.remove('hidden');
+            }
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.add('hidden');
+        }
+
+        function confirmRegistrationPayment() {
+            if (pendingRegisterActId) {
+                const act = MOCK_DB.getActivities().find(a => a.id === pendingRegisterActId);
+                saveRegistration(act.id, act.title, act.fee);
+                closePaymentModal();
+            }
+        }
+
+        function saveRegistration(actId, actTitle, fee) {
+            const regs = MOCK_DB.getRegistrations();
+            const newReg = {
+                id: Date.now(),
+                userId: currentUser.id,
+                actId,
+                actTitle,
+                fee,
+                timestamp: new Date().toLocaleString()
+            };
+            regs.push(newReg);
+            MOCK_DB.saveData('SAKURA_REGISTRATIONS', regs);
+
+            // Log activity history
+            const logs = JSON.parse(localStorage.getItem('SAKURA_LOGS')) || [];
+            logs.push({
+                id: Date.now(),
+                userId: currentUser.id,
+                action_type: 'activity',
+                title: 'Đăng ký vé sự kiện',
+                description: `Đăng ký thành công hoạt động "${actTitle}" - Trạng thái: Vé điện tử QR đã được gửi về email.`,
+                time: new Date().toLocaleString()
+            });
+            localStorage.setItem('SAKURA_LOGS', JSON.stringify(logs));
+
+            // Simulating automatic confirmation email
+            console.log(`[EMAIL CONFIRM] Sent to ${currentUser.email}: Registration successful for "${actTitle}". Unique ticket ID is TICKET-${Date.now()}`);
+
+            showToast(t('reg_success_alert'), 'success');
+            renderCurrentView();
+        }
+    </script>
+
+    <!-- VIEW 4: MAP & GAME INTERACTION (game.html) -->
+    <script>
+        function viewGame() {
+            const booths = MOCK_DB.getBooths();
+            const checkins = MOCK_DB.getCheckins().filter(c => c.userId === currentUser.id);
+            const progress = booths.length > 0 ? Math.round((checkins.length / booths.length) * 100) : 0;
+
+            return `
+                <div class="max-w-5xl mx-auto space-y-8">
+                    <!-- Game brief -->
+                    <div class="bg-gradient-to-r from-purple-600 to-pink-500 rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="space-y-3 max-w-xl">
+                            <span class="inline-block bg-white/20 text-white font-extrabold text-[10px] tracking-wider uppercase px-3 py-1 rounded-full">
+                                MINIGAME: SĂN DẤU SAKURA 🌸
+                            </span>
+                            <h2 class="text-xl sm:text-2xl font-black">Nhận Diện Kiosk AI - Đổi Quà May Mắn</h2>
+                            <p class="text-xs sm:text-sm text-pink-100 leading-relaxed">
+                                Di chuyển qua các gian hàng lễ hội tại Gigamall, thực hiện nhiệm vụ và quét mã "Check-in" để tích lũy con dấu điện tử. Đạt mốc 100% để nhận trọn bộ quà lưu niệm cao cấp từ BTC!
+                            </p>
+                        </div>
+                        
+                        <!-- Progress chart bar -->
+                        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/10 text-center w-full md:w-56 space-y-2 shrink-0">
+                            <span class="text-xs font-bold text-pink-100 block">TIẾN ĐỘ THU THẬP DẤU</span>
+                            <span class="text-3xl font-black block">${checkins.length}/${booths.length}</span>
+                            <div class="w-full bg-slate-900/30 rounded-full h-3 overflow-hidden border border-white/10">
+                                <div class="bg-gradient-to-r from-amber-300 to-pink-400 h-full transition-all duration-500" style="width: ${progress}%"></div>
+                            </div>
+                            <span class="text-[10px] text-pink-200 font-semibold block">Đã hoàn tất ${progress}% hành trình</span>
+                        </div>
+                    </div>
+
+                    <!-- Main grid of booths mapping & map interact -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <!-- interactive Layout schema diagram -->
+                        <div class="lg:col-span-7 bg-white rounded-3xl p-6 border border-pink-100 shadow-xl overflow-x-auto">
+                            <h3 class="font-extrabold text-slate-800 text-lg mb-4 text-center">BẢN ĐỒ TƯƠNG TÁC SÂN LỄ HỘI GIGAMALL</h3>
+                            
+                            <div class="relative w-[480px] bg-[#ffd0dc] border-2 border-slate-900 rounded-3xl p-6 mx-auto shadow-inner">
+                                <div class="text-center font-bold text-slate-900 mb-4 border-b-2 border-dashed border-pink-400/40 pb-2">
+                                    <h1 class="text-xl tracking-wide uppercase font-black">Lễ Hội Hoa Anh Đào 2026</h1>
+                                    <span class="text-xs font-semibold tracking-widest text-pink-600 block">SƠ ĐỒ SỰ KIỆN GIGAMALL</span>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <div class="bg-purple-500 border-2 border-slate-900 rounded-xl py-3 font-bold text-white text-center shadow-md cursor-pointer hover:bg-purple-600 transition-colors" onclick="showMapBoothTip('Cổng vào Lễ hội', 'Nơi khởi đầu của hành trình. Vui lòng check-in và nhận quẻ Omikuji may mắn!')">
+                                        Cổng vào Lễ hội
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-5 gap-3">
+                                        <div class="col-span-3 bg-rose-500 border-2 border-slate-900 rounded-xl p-3 font-bold text-white text-xs text-center flex items-center justify-center cursor-pointer hover:bg-rose-600 transition-colors" onclick="showMapBoothTip('Khu biểu diễn Cosplay', 'Khu vực chính tụ hội của hàng trăm cosplayers nổi tiếng.')">
+                                            Khu vực biểu diễn Cosplay / âm nhạc
+                                        </div>
+                                        <div class="col-span-2 bg-rose-500 border-2 border-slate-900 rounded-xl p-3 font-bold text-white text-xs text-center flex items-center justify-center cursor-pointer hover:bg-rose-600 transition-colors" onclick="showMapBoothTip('Sân khấu chính', 'Trọng tâm tổ chức live-performance và bốc thăm trúng thưởng.')">
+                                            Sân khấu
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex gap-4">
+                                        <div class="grid grid-cols-2 gap-3 flex-grow">
+                                            <!-- Columns with interactive booth indicators -->
+                                            <div class="space-y-2.5">
+                                                <div onclick="navigate('booth-detail', {id: 1})" class="bg-amber-400 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-slate-900 text-[10px] text-center cursor-pointer hover:bg-amber-300 transition-colors">
+                                                    Mystical Yukata Shop
+                                                </div>
+                                                <div onclick="navigate('booth-detail', {id: 2})" class="bg-amber-400 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-slate-900 text-[10px] text-center cursor-pointer hover:bg-amber-300 transition-colors">
+                                                    Finger Math
+                                                </div>
+                                                <div onclick="navigate('booth-detail', {id: 5})" class="bg-amber-400 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-slate-900 text-[10px] text-center cursor-pointer hover:bg-amber-300 transition-colors">
+                                                    Quà lưu niệm
+                                                </div>
+                                                <div onclick="navigate('booth-detail', {id: 3})" class="bg-amber-400 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-slate-900 text-[10px] text-center cursor-pointer hover:bg-amber-300 transition-colors">
+                                                    Tháp Sáng Tạo
+                                                </div>
+                                                <div onclick="navigate('booth-detail', {id: 4})" class="bg-amber-400 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-slate-900 text-[10px] text-center cursor-pointer hover:bg-amber-300 transition-colors">
+                                                    Nặn đất sét
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="space-y-2.5">
+                                                <div onclick="navigate('booth-detail', {id: 6})" class="bg-amber-400 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-slate-900 text-[10px] text-center cursor-pointer hover:bg-amber-300 transition-colors">
+                                                    Khu check-in
+                                                </div>
+                                                <div onclick="navigate('booth-detail', {id: 7})" class="bg-amber-400 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-slate-900 text-[10px] text-center cursor-pointer hover:bg-amber-300 transition-colors">
+                                                    Quầy thức ăn
+                                                </div>
+                                                <div onclick="navigate('booth-detail', {id: 8})" class="bg-amber-400 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-slate-900 text-[10px] text-center cursor-pointer hover:bg-amber-300 transition-colors">
+                                                    Quầy quần áo
+                                                </div>
+                                                <div onclick="navigate('booth-detail', {id: 9})" class="bg-amber-400 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-slate-900 text-[10px] text-center cursor-pointer hover:bg-amber-300 transition-colors">
+                                                    Workshop Matcha
+                                                </div>
+                                                <div onclick="navigate('booth-detail', {id: 10})" class="bg-amber-400 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-slate-900 text-[10px] text-center cursor-pointer hover:bg-amber-300 transition-colors">
+                                                    Quầy trò chơi
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Haunted house wrap layout -->
+                                        <div onclick="navigate('haunted')" class="w-16 bg-[#4dd0e1] border-2 border-slate-900 rounded-xl flex items-center justify-center font-bold text-slate-900 text-xs text-center p-2 [writing-mode:vertical-rl] transform rotate-180 hover:bg-[#26c6da] cursor-pointer transition-colors">
+                                            Khu vực Nhà ma Huyết Anh Đào
+                                        </div>
+                                    </div>
+                                    
+                                    <div onclick="navigate('haunted')" class="bg-[#4dd0e1] border-2 border-slate-900 rounded-xl py-3 font-bold text-slate-900 text-sm text-center shadow-md cursor-pointer hover:bg-[#26c6da] transition-colors">
+                                        Mê cung Nhà Ma (Phía sảnh mở rộng)
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 text-center text-xs text-slate-400 italic">
+                                *Nhấp chọn trực tiếp từng ô màu sắc trên sơ đồ để tới nhanh trang nhiệm vụ của gian hàng đó!
+                            </div>
+                        </div>
+
+                        <!-- Right side: Booth card list with state -->
+                        <div class="lg:col-span-5 space-y-4">
+                            <h3 class="font-bold text-slate-800 text-lg flex items-center space-x-2">
+                                <i data-lucide="check-square" class="w-5 h-5 text-pink-500"></i>
+                                <span>Danh Sách Gian Hàng & Con Dấu</span>
+                            </h3>
+
+                            <div class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                                ${booths.map(booth => {
+                                    const isDone = checkins.some(c => c.boothId === booth.id);
+                                    return `
+                                        <div onclick="navigate('booth-detail', {id: ${booth.id}})" class="p-4 bg-white hover:bg-pink-50/20 rounded-2xl border ${isDone ? 'border-emerald-200 bg-emerald-50/10' : 'border-slate-100'} shadow-sm flex items-center justify-between cursor-pointer hover:shadow transition-all">
+                                            <div class="space-y-1">
+                                                <h4 class="font-bold text-slate-800 text-sm sm:text-base">${booth.name}</h4>
+                                                <p class="text-[11px] text-slate-400 flex items-center">
+                                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 mr-1 text-slate-400"></i>
+                                                    <span>${booth.location_label}</span>
+                                                </p>
+                                                <p class="text-xs text-pink-600 font-semibold mt-1">Phần quà: ${booth.reward}</p>
+                                            </div>
+
+                                            <div class="shrink-0 pl-3">
+                                                ${isDone ? `
+                                                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-sm">
+                                                        <i data-lucide="award" class="w-5 h-5"></i>
+                                                    </div>
+                                                ` : `
+                                                    <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center hover:bg-pink-100 hover:text-pink-500 transition-colors">
+                                                        <i data-lucide="scan" class="w-5 h-5"></i>
+                                                    </div>
+                                                `}
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showMapBoothTip(name, desc) {
+            showToast(`${name}: ${desc}`, 'success');
+        }
+    </script>
+
+    <!-- VIEW 5: BOOTH DETAIL (booth-detail.html) -->
+    <script>
+        function viewBoothDetail(id) {
+            const booth = MOCK_DB.getBooths().find(b => b.id === parseInt(id));
+            if (!booth) return `<div class="text-center py-20">Không tìm thấy gian hàng.</div>`;
+
+            const isCheckIn = MOCK_DB.getCheckins().some(c => c.boothId === booth.id && c.userId === currentUser.id);
+
+            return `
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <button onclick="navigate('game')" class="flex items-center space-x-1.5 text-pink-600 hover:text-pink-700 font-bold text-sm">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        <span>Quay lại bản đồ trò chơi</span>
+                    </button>
+
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-pink-100 shadow-xl space-y-6">
+                        <div class="flex flex-col sm:flex-row justify-between items-start gap-4 pb-6 border-b border-slate-100">
+                            <div>
+                                <span class="bg-pink-100 text-pink-700 text-[10px] font-extrabold uppercase px-3 py-1 rounded-full tracking-wide">
+                                    Vị trí: ${booth.location_label}
+                                </span>
+                                <h1 class="text-xl sm:text-2xl font-black text-slate-800 mt-2">${booth.name}</h1>
+                                <p class="text-xs sm:text-sm text-slate-500 mt-2 leading-relaxed">${booth.desc}</p>
+                            </div>
+                            
+                            <div class="shrink-0 w-full sm:w-auto">
+                                ${isCheckIn ? `
+                                    <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold text-sm px-4 py-2.5 rounded-xl flex items-center justify-center space-x-1.5">
+                                        <i data-lucide="check-circle" class="w-5 h-5 text-emerald-600"></i>
+                                        <span>ĐÃ THU HOẠCH CON DẤU</span>
+                                    </div>
+                                ` : `
+                                    <button onclick="handleBoothCheckIn(${booth.id})" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold rounded-xl shadow-lg shadow-pink-100 hover:scale-[1.02] transition-all flex items-center justify-center space-x-2">
+                                        <i data-lucide="map-pin-check" class="w-5 h-5"></i>
+                                        <span>CHECK-IN TÍCH LŨY</span>
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+
+                        <!-- Mission card -->
+                        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                            <div class="space-y-2">
+                                <h4 class="font-bold text-slate-700 flex items-center space-x-2">
+                                    <span class="w-2.5 h-2.5 bg-pink-500 rounded-full inline-block"></span>
+                                    <span>Nhiệm vụ tại quầy</span>
+                                </h4>
+                                <p class="text-xs sm:text-sm text-slate-600 font-semibold bg-white p-3 rounded-xl border border-slate-100/60 leading-relaxed">
+                                    ${booth.mission}
+                                </p>
+                            </div>
+
+                            <div class="space-y-2">
+                                <h4 class="font-bold text-slate-700 flex items-center space-x-2">
+                                    <span class="w-2.5 h-2.5 bg-amber-500 rounded-full inline-block"></span>
+                                    <span>Phần quà đạt được</span>
+                                </h4>
+                                <p class="text-xs sm:text-sm text-amber-700 font-bold bg-amber-50 p-3 rounded-xl border border-amber-100/50 leading-relaxed">
+                                    🎁 ${booth.reward}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Image upload simulation area -->
+                        <div class="space-y-4">
+                            <h3 class="font-bold text-slate-800 text-base sm:text-lg flex items-center space-x-2">
+                                <i data-lucide="image" class="w-5 h-5 text-pink-500"></i>
+                                <span>Thư Viện Ảnh Trải Nghiệm Gian Hàng</span>
+                            </h3>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+                                <!-- Upload interactive panel -->
+                                <div class="bg-pink-50/20 border-2 border-dashed border-pink-200 rounded-3xl p-6 text-center space-y-4">
+                                    <div class="w-12 h-12 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
+                                        <i data-lucide="upload" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="text-xs">
+                                        <span class="block font-bold text-slate-700">Tải ảnh trải nghiệm của bạn lên</span>
+                                        <span class="block text-slate-400 mt-1">Định dạng PNG, JPG, JPEG (Mô phỏng)</span>
+                                    </div>
+                                    
+                                    <input type="text" id="demo-photo-url" placeholder="Nhập địa chỉ URL ảnh minh họa (tùy chọn)" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-pink-500 text-center bg-white">
+                                    
+                                    <button onclick="handlePhotoSubmit(${booth.id})" class="w-full py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-xl text-xs font-bold shadow-md shadow-pink-100 transition-all flex items-center justify-center space-x-1.5">
+                                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                                        <span>AI KIỂM TRA & LƯU LẠI</span>
+                                    </button>
+                                </div>
+
+                                <!-- Photo submissions feed -->
+                                <div class="space-y-3">
+                                    <h4 class="font-semibold text-slate-600 text-xs sm:text-sm">Hình ảnh gần đây từ cộng đồng</h4>
+                                    
+                                    <div class="space-y-2 max-h-[220px] overflow-y-auto pr-1" id="booth-photos-list">
+                                        <!-- Loaded dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleBoothCheckIn(id) {
+            const checkins = MOCK_DB.getCheckins();
+            const exist = checkins.some(c => c.boothId === id && c.userId === currentUser.id);
+            if (exist) return;
+
+            const booth = MOCK_DB.getBooths().find(b => b.id === id);
+
+            checkins.push({
+                id: Date.now(),
+                userId: currentUser.id,
+                boothId: id,
+                timestamp: new Date().toLocaleString()
+            });
+            MOCK_DB.saveData('SAKURA_CHECKINS', checkins);
+
+            // Log activity history
+            const logs = JSON.parse(localStorage.getItem('SAKURA_LOGS')) || [];
+            logs.push({
+                id: Date.now(),
+                userId: currentUser.id,
+                action_type: 'checkin',
+                title: 'Check-in thành công',
+                description: `Đã check-in thành công tại gian hàng "${booth.name}" và tích lũy 1 con dấu.`,
+                time: new Date().toLocaleString()
+            });
+            localStorage.setItem('SAKURA_LOGS', JSON.stringify(logs));
+
+            showToast(`Check-in thành công tại ${booth.name}! Nhận quẻ: ${booth.reward}`, 'success');
+            renderCurrentView();
+        }
+
+        function handlePhotoSubmit(boothId) {
+            let url = document.getElementById('demo-photo-url').value.trim();
+            if (!url) {
+                // Fallback elegant sample photo
+                url = "https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&q=80&w=400";
+            }
+
+            // AI Status simulator responses
+            const aiStatusOptions = [
+                { status: 'Hợp lệ', color: 'text-emerald-600 bg-emerald-50 border-emerald-100', desc: 'AI chấm điểm 10/10: Ảnh chụp đúng gian hàng và thể hiện rõ không khí lễ hội!' },
+                { status: 'Nghi ngờ ảnh không liên quan', color: 'text-amber-600 bg-amber-50 border-amber-100', desc: 'AI cảnh báo: Ảnh dường như không chụp quang cảnh lễ hội. Vui lòng tải lại ảnh khác!' },
+                { status: 'Nghi ngờ ảnh trùng lặp', color: 'text-rose-600 bg-rose-50 border-rose-100', desc: 'AI cảnh báo: Bức ảnh này đã được sử dụng bởi một tài khoản khác để check-in.' }
+            ];
+
+            const pickResponse = aiStatusOptions[Math.floor(Math.random() * aiStatusOptions.length)];
+
+            // Save to logs and show
+            const logs = JSON.parse(localStorage.getItem('SAKURA_LOGS')) || [];
+            logs.push({
+                id: Date.now(),
+                userId: currentUser.id,
+                action_type: 'upload',
+                title: 'Đăng tải ảnh trải nghiệm',
+                description: `Đã gửi ảnh lên gian hàng để AI phân tích. Trạng thái phản hồi AI: ${pickResponse.status}`,
+                time: new Date().toLocaleString()
+            });
+            localStorage.setItem('SAKURA_LOGS', JSON.stringify(logs));
+
+            // Custom popup modal simulating AI scan
+            const dummyModal = document.createElement('div');
+            dummyModal.className = "fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4";
+            dummyModal.innerHTML = `
+                <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl">
+                    <div class="w-16 h-16 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto animate-bounce">
+                        <i data-lucide="cpu" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="font-extrabold text-slate-800 text-lg">AI KIỂM TRA ĐANG XỬ LÝ...</h3>
+                    <p class="text-xs text-slate-400">Trợ lý AI đang đối chiếu dữ liệu hình ảnh tại sảnh Phạm Văn Đồng Gigamall...</p>
+                    <div class="border-t border-slate-100 pt-4 space-y-3">
+                        <span class="inline-block px-4 py-1.5 rounded-full text-xs font-bold border ${pickResponse.color}">${pickResponse.status}</span>
+                        <p class="text-xs text-slate-600 leading-relaxed font-semibold">${pickResponse.desc}</p>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="w-full py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-xl text-xs font-bold">Xác nhận</button>
+                </div>
+            `;
+            document.body.appendChild(dummyModal);
+            lucide.createIcons();
+
+            document.getElementById('demo-photo-url').value = '';
+        }
+    </script>
+
+    <!-- VIEW 6: YUKATA EXPERIENCE (yukata.html) -->
+    <script>
+        let yukataTab = 'design'; // design or rent
+
+        function viewYukata() {
+            return `
+                <div class="max-w-5xl mx-auto space-y-8">
+                    <!-- Title Header -->
+                    <div class="text-center max-w-2xl mx-auto space-y-2">
+                        <span class="bg-pink-100 text-pink-700 text-[10px] font-extrabold uppercase px-3 py-1 rounded-full tracking-wider">
+                            TRẢI NGHIỆM TRANG PHỤC CỔ TRUYỀN NHẬT BẢN
+                        </span>
+                        <h1 class="text-2xl sm:text-4xl font-black text-pink-600">Trải Nghiệm Yukata Thơ Mộng</h1>
+                        <p class="text-xs sm:text-sm text-slate-400">Tự tay phác thảo mẫu Yukata hằng mong ước hoặc thử đồ nhanh chóng bằng công nghệ Kiosk AI</p>
+                    </div>
+
+                    <!-- Tabs switcher buttons -->
+                    <div class="flex border-b border-pink-100 max-w-md mx-auto">
+                        <button onclick="changeYukataTab('design')" id="yukata-tab-design" class="flex-1 py-3 text-center text-sm font-bold border-b-2 transition-all">
+                            🖌️ Tự Thiết Kế (May Đo)
+                        </button>
+                        <button onclick="changeYukataTab('rent')" id="yukata-tab-rent" class="flex-1 py-3 text-center text-sm font-bold border-b-2 transition-all">
+                            👘 Thuê Trang Phục
+                        </button>
+                    </div>
+
+                    <div id="yukata-dynamic-view-panel">
+                        <!-- Filled by setupYukataListeners -->
+                    </div>
+                </div>
+            `;
+        }
+
+        function changeYukataTab(tab) {
+            yukataTab = tab;
+            setupYukataListeners();
+        }
+
+        function setupYukataListeners() {
+            // update tabs colors
+            const dBtn = document.getElementById('yukata-tab-design');
+            const rBtn = document.getElementById('yukata-tab-rent');
+            if (dBtn && rBtn) {
+                if (yukataTab === 'design') {
+                    dBtn.className = "flex-1 py-3 text-center text-sm font-bold border-b-2 border-pink-500 text-pink-600";
+                    rBtn.className = "flex-1 py-3 text-center text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-600";
+                } else {
+                    rBtn.className = "flex-1 py-3 text-center text-sm font-bold border-b-2 border-pink-500 text-pink-600";
+                    dBtn.className = "flex-1 py-3 text-center text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-600";
+                }
+            }
+
+            const panel = document.getElementById('yukata-dynamic-view-panel');
+            if (!panel) return;
+
+            if (yukataTab === 'design') {
+                panel.innerHTML = `
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <!-- Configurations -->
+                        <div class="lg:col-span-7 bg-white rounded-3xl p-6 border border-pink-100 shadow-xl space-y-5 text-sm">
+                            <h3 class="font-extrabold text-slate-800 text-lg border-b border-slate-100 pb-3">ĐỊNH HÌNH PHONG CÁCH YUKATA CỦA BẠN</h3>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Tông màu chủ đạo</label>
+                                    <select id="yk-color" onchange="updateYukataPreviewState()" class="w-full border border-slate-200 rounded-xl px-3 py-2 outline-none">
+                                        <option value="Hồng Sakura">Hồng cánh đào Sakura</option>
+                                        <option value="Tím Cẩm Tú Cầu">Tím huyền ảo Ajisai</option>
+                                        <option value="Đỏ Kim Ngư">Đỏ lôi cuốn Kingyo</option>
+                                        <option value="Xanh Trúc Việt">Xanh mát dịu trúc xanh</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Họa tiết trang phục</label>
+                                    <select id="yk-pattern" onchange="updateYukataPreviewState()" class="w-full border border-slate-200 rounded-xl px-3 py-2 outline-none">
+                                        <option value="Cánh hoa anh đào rơi">Cánh hoa anh đào rơi tự do</option>
+                                        <option value="Sóng biển Seigaiha">Họa tiết sóng biển cổ điển Nhật</option>
+                                        <option value="Chú cá chép vàng vượt vũ môn">Cá chép vượt vũ môn thêu tay</option>
+                                        <option value="Hoa cúc thêu nổi kim tuyến">Hoa cúc đại đóa sang trọng</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Màu sắc đai thắt (Obi)</label>
+                                    <select id="yk-obi" onchange="updateYukataPreviewState()" class="w-full border border-slate-200 rounded-xl px-3 py-2 outline-none">
+                                        <option value="Đỏ thẫm truyền thống">Đỏ thẫm (Akai Obi)</option>
+                                        <option value="Vàng Hoàng kim nổi bật">Vàng hoàng kim quý phái</option>
+                                        <option value="Trắng tuyết tinh khôi">Trắng tuyết nhẹ nhàng</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Chất liệu vải may</label>
+                                    <select id="yk-fabric" onchange="updateYukataPreviewState()" class="w-full border border-slate-200 rounded-xl px-3 py-2 outline-none">
+                                        <option value="Cotton Nhật 100% thoáng mát">Cotton Nhật tự nhiên thoáng mát</option>
+                                        <option value="Vải Lụa satin mềm mượt mịn màng">Lụa Satin mịn màng óng ả</option>
+                                        <option value="Linen thô mộc mạc cổ kính">Vải Linen dệt thô mộc mạc</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Dedicated Draw Sketch Upload area -->
+                            <div class="border-2 border-dashed border-pink-200 rounded-2xl p-4 text-center space-y-3">
+                                <label class="block text-xs font-bold text-slate-700 uppercase">${t('upload_art')}</label>
+                                <input type="text" id="yk-sketch-url" placeholder="Nhập liên kết URL bản vẽ tháp sáng tạo..." class="w-full border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-pink-500 text-center bg-slate-50">
+                                <p class="text-[10px] text-slate-400 font-semibold">*Tự thiết kế là hoàn toàn tự nguyện, không bắt buộc để đăng ký trải nghiệm!</p>
+                            </div>
+
+                            <!-- Costing section and May request block -->
+                            <div class="bg-pink-50 border border-pink-100 rounded-2xl p-4 space-y-3">
+                                <div class="flex justify-between items-center text-xs">
+                                    <span class="font-bold text-slate-600">Phí tham gia thiết kế ảo</span>
+                                    <span class="font-bold text-pink-600">50.000 VND</span>
+                                </div>
+                                <div class="flex justify-between items-center text-xs border-t border-pink-100 pt-2">
+                                    <span class="font-bold text-slate-600">Hỗ trợ BTC may đo thật độc quyền</span>
+                                    <span class="font-bold text-pink-600">750.000 VND / Bộ</span>
+                                </div>
+                                
+                                <div class="pt-2">
+                                    <input type="text" id="yk-contact-phone" placeholder="${t('contact_btc_placeholder')}" class="w-full border border-pink-200 rounded-xl px-3 py-2 text-xs outline-none focus:border-pink-500 mb-2">
+                                    
+                                    <button onclick="handleMayTailorRequest()" class="w-full py-2.5 bg-pink-500 hover:bg-pink-600 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-pink-100 flex items-center justify-center space-x-1">
+                                        <i data-lucide="scissors" class="w-4 h-4"></i>
+                                        <span>Gửi thông tin cho Ban Tổ Chức</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right panel Live Preview side -->
+                        <div class="lg:col-span-5 bg-gradient-to-b from-pink-500 to-purple-600 rounded-3xl p-6 text-white shadow-xl flex flex-col justify-between">
+                            <div class="text-center space-y-2">
+                                <h3 class="font-extrabold text-lg tracking-tight">KẾT QUẢ PHỐI ĐỒ TRỰC QUAN</h3>
+                                <p class="text-[10px] text-pink-100">Cập nhật ngay lập tức theo các lựa chọn tinh chỉnh</p>
+                            </div>
+
+                            <!-- Illustrated Doll mockup -->
+                            <div class="my-8 bg-white/10 rounded-2xl p-6 border border-white/20 text-center space-y-4">
+                                <div class="w-28 h-28 bg-white rounded-full flex items-center justify-center mx-auto shadow-inner text-4xl">
+                                    🎎
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="text-[10px] text-pink-200 block uppercase font-black">Yukata Model 2026</span>
+                                    <span class="text-base font-black block" id="preview-yk-title">Hồng Sakura</span>
+                                    <p class="text-xs text-pink-100 italic" id="preview-yk-details">Họa tiết cánh hoa anh đào rơi - Đai thắt đỏ thẫm</p>
+                                </div>
+                            </div>
+
+                            <div class="text-xs text-pink-100/80 border-t border-white/10 pt-4 leading-relaxed text-center">
+                                Tên mẫu độc quyền lưu dưới mã số khách hàng cá nhân. Trải nghiệm vui lòng liên hệ quầy Mystical Yukata Shop.
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                panel.innerHTML = `
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <!-- Rent details guidelines -->
+                        <div class="lg:col-span-7 bg-white rounded-3xl p-6 border border-pink-100 shadow-xl space-y-5 text-sm">
+                            <h3 class="font-extrabold text-slate-800 text-lg">HƯỚNG DẪN THUÊ ĐỒ TRUYỀN THỐNG</h3>
+                            
+                            <div class="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-2xl space-y-1.5 font-semibold">
+                                <span class="block text-xs uppercase tracking-wider font-extrabold text-amber-600">Gói Thuê Đồ Dạo Chơi</span>
+                                <p class="text-xs sm:text-sm">Chỉ với <span class="text-pink-600 font-bold">50.000 VND / giờ</span>, nhận ngay một bộ Yukata dạo chơi tự do, chụp ảnh tại sảnh Torii và Cung Đường Vàng Sakura.</p>
+                            </div>
+
+                            <!-- Illustrated how to dress steps -->
+                            <div class="space-y-3">
+                                <h4 class="font-bold text-slate-700 flex items-center space-x-2">
+                                    <i data-lucide="info" class="w-5 h-5 text-pink-500"></i>
+                                    <span>Quy trình 4 Bước mặc Yukata đúng chuẩn</span>
+                                </h4>
+                                
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100/60">
+                                        <span class="font-bold text-pink-600 block mb-1">Bước 1: Áo lót & Khoác</span>
+                                        <span>Mặc áo lót mỏng thấm mồ hôi, khoác Yukata che khít hai cánh tay thanh nhã.</span>
+                                    </div>
+                                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100/60">
+                                        <span class="font-bold text-pink-600 block mb-1">Bước 2: Vạt áo phải trước</span>
+                                        <span>Gấp vạt áo bên phải trước, vạt trái đè lên trên. Đây là quy tắc tối mật tâm linh!</span>
+                                    </div>
+                                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100/60">
+                                        <span class="font-bold text-pink-600 block mb-1">Bước 3: Thắt dây cố định</span>
+                                        <span>Dùng dây đai phụ buộc chặt ngang hông để tạo form dáng đứng thẳng thớm.</span>
+                                    </div>
+                                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100/60">
+                                        <span class="font-bold text-pink-600 block mb-1">Bước 4: Nơ đai Obi</span>
+                                        <span>Thắt nơ đai Obi bản to phía sau lưng, cân đối hài hòa dáng người thanh mảnh.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Embed Youtube instructions links as per rules -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                                <a href="https://www.youtube.com/watch?v=pmtD-MYZRcg" target="_blank" class="flex items-center space-x-3 bg-rose-50 hover:bg-rose-100 text-rose-600 p-3.5 rounded-2xl border border-rose-200/50 font-bold text-xs transition-colors shadow-sm">
+                                    <i data-lucide="youtube" class="w-6 h-6 text-rose-500 shrink-0"></i>
+                                    <span>Xem video Hướng dẫn mặc cho Nam 👦</span>
+                                </a>
+                                <a href="https://www.youtube.com/watch?v=Ce7Duxhrzew" target="_blank" class="flex items-center space-x-3 bg-purple-50 hover:bg-purple-100 text-purple-600 p-3.5 rounded-2xl border border-purple-200/50 font-bold text-xs transition-colors shadow-sm">
+                                    <i data-lucide="youtube" class="w-6 h-6 text-purple-500 shrink-0"></i>
+                                    <span>Xem video Hướng dẫn mặc cho Nữ 👧</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Kiosk simulator side and AI facial suggestions upload -->
+                        <div class="lg:col-span-5 bg-slate-900 text-white rounded-3xl p-6 shadow-xl space-y-6 flex flex-col justify-between">
+                            <div class="text-center space-y-2">
+                                <span class="bg-pink-500 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase">KIOSK AI QUÉT MẶT THỬ ĐỒ 🤖</span>
+                                <h3 class="font-black text-lg tracking-tight mt-2">Gợi Ý Trang Phục Phù Hợp</h3>
+                                <p class="text-xs text-slate-400">Tải ảnh chân dung rõ mặt để AI tiến hành phân tích sắc thái gương mặt, vóc dáng để ghép bộ Yukata phù hợp nhất.</p>
+                            </div>
+
+                            <!-- Upload area for facial scan -->
+                            <div class="bg-slate-800 border-2 border-dashed border-slate-700 rounded-2xl p-6 text-center space-y-4">
+                                <div class="w-10 h-10 bg-slate-700 text-pink-400 rounded-full flex items-center justify-center mx-auto">
+                                    <i data-lucide="camera" class="w-5 h-5"></i>
+                                </div>
+                                <input type="text" id="yk-face-photo-url" placeholder="Nhập URL ảnh chân dung của bạn..." class="w-full border border-slate-700 bg-slate-900 text-white rounded-xl px-3 py-2 text-xs text-center outline-none focus:border-pink-500">
+                                <button onclick="handleAISuggestYukata()" class="w-full py-2.5 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-xl text-xs font-bold hover:scale-[1.01] transition-all flex items-center justify-center space-x-1.5">
+                                    <i data-lucide="wand-2" class="w-4 h-4"></i>
+                                    <span>AI KHẢO SÁT & ĐỀ XUẤT MẪU</span>
+                                </button>
+                            </div>
+
+                            <div class="text-xs text-slate-500 text-center leading-relaxed font-semibold">
+                                *Công nghệ bảo mật sinh trắc học hoàn toàn ảo. Không lưu trữ ảnh gốc của bạn trên máy chủ thực tế.
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            lucide.createIcons();
+        }
+
+        function updateYukataPreviewState() {
+            const color = document.getElementById('yk-color').value;
+            const pat = document.getElementById('yk-pattern').value;
+            const obi = document.getElementById('yk-obi').value;
+
+            document.getElementById('preview-yk-title').innerText = color;
+            document.getElementById('preview-yk-details').innerText = `Họa tiết ${pat} - Đai thắt ${obi}`;
+        }
+
+        function handleMayTailorRequest() {
+            const color = document.getElementById('yk-color').value;
+            const phone = document.getElementById('yk-contact-phone').value.trim();
+
+            if (!phone) {
+                showToast("Vui lòng nhập số điện thoại hoặc liên lạc Zalo!", "error");
+                return;
+            }
+
+            const designs = MOCK_DB.getYukataDesigns();
+            designs.push({
+                id: Date.now(),
+                userId: currentUser.id,
+                userName: currentUser.name,
+                contact: phone,
+                color,
+                timestamp: new Date().toLocaleString()
+            });
+            MOCK_DB.saveData('SAKURA_YUKATA_DESIGNS', designs);
+
+            // Log activity history
+            const logs = JSON.parse(localStorage.getItem('SAKURA_LOGS')) || [];
+            logs.push({
+                id: Date.now(),
+                userId: currentUser.id,
+                action_type: 'yukata',
+                title: 'Gửi thiết kế Yukata',
+                description: `Đăng ký thiết kế bộ Yukata sắc "${color}" lên BTC đặt may thật.`,
+                time: new Date().toLocaleString()
+            });
+            localStorage.setItem('SAKURA_LOGS', JSON.stringify(logs));
+
+            showToast(t('may_success'), 'success');
+            document.getElementById('yk-contact-phone').value = '';
+        }
+
+        function handleAISuggestYukata() {
+            // Mock AI suggest outcomes based on standard colors
+            const recommendations = [
+                "AI Kiosk khuyên dùng: Bạn có gương mặt tươi sáng, nụ cười rạng rỡ. Rất phù hợp với mẫu 'Hồng Sakura' kết hợp đai thắt vàng óng ánh!",
+                "AI Kiosk khuyên dùng: Nét mặt điềm tĩnh thanh lịch của bạn hoàn hảo với mẫu 'Tím Cẩm Tú Cầu' Ajisai quyến rũ cổ điển.",
+                "AI Kiosk khuyên dùng: Phong cách khỏe khoắn, năng động của bạn cực kỳ ăn ý với mẫu 'Xanh Trúc Việt' mát dịu, quý phái!"
+            ];
+
+            const response = recommendations[Math.floor(Math.random() * recommendations.length)];
+
+            const dummyModal = document.createElement('div');
+            dummyModal.className = "fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4";
+            dummyModal.innerHTML = `
+                <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl text-slate-800">
+                    <div class="w-14 h-14 bg-pink-100 text-pink-500 rounded-full flex items-center justify-center mx-auto text-3xl">
+                        🔮
+                    </div>
+                    <h3 class="font-extrabold text-lg">KẾT QUẢ PHÂN TÍCH AI KIOSK</h3>
+                    <p class="text-xs text-slate-600 font-semibold leading-relaxed p-4 bg-pink-50 rounded-2xl border border-pink-100">${response}</p>
+                    <button onclick="this.parentElement.parentElement.remove()" class="w-full py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-xl text-xs font-bold shadow-md shadow-pink-100 transition-all">Tuyệt vời!</button>
+                </div>
+            `;
+            document.body.appendChild(dummyModal);
+        }
+    </script>
+
+    <!-- VIEW 7: HAUNTED HOUSE EXPERIENCE (haunted-house.html) -->
+    <script>
+        function viewHaunted() {
+            const hasReg = MOCK_DB.getHauntedRegs().some(r => r.userId === currentUser.id);
+
+            return `
+                <div class="max-w-4xl mx-auto bg-slate-950 text-slate-300 rounded-3xl border border-red-950/40 overflow-hidden shadow-2xl relative">
+                    <!-- Blood Sakura Overlay banner -->
+                    <div class="relative h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=1200')">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6 text-white space-y-1.5">
+                            <span class="bg-rose-700 text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-full tracking-wider">
+                                MÊ CUNG GIẢI ĐỐ SỬ THI KINH DỊ MALICIOUS
+                            </span>
+                            <h1 class="text-xl sm:text-3xl font-black text-rose-500 uppercase tracking-tight">“Lời nguyền huyết anh đào: Chồng của tôi đâu?”</h1>
+                        </div>
+                    </div>
+
+                    <div class="p-6 sm:p-8 space-y-8 text-sm leading-relaxed">
+                        <!-- Story Block -->
+                        <div class="space-y-3.5 border-l-4 border-rose-700 pl-4 bg-rose-950/10 py-2 pr-3 rounded-r-xl">
+                            <h3 class="font-black text-rose-500 uppercase text-base">Cốt truyện hận sầu vương vấn</h3>
+                            <p class="text-xs text-slate-400">
+                                Cuối Thế chiến thứ II, Kazuo chia tay vợ hiền Chiyo và đứa con thơ lên đường ra mặt trận. Nhận nhầm giấy báo tử sai lệch gửi về làng trong bom đạn loạn lạc, Chiyo tuyệt vọng thắt cổ tự vẫn trên cây hoa anh đào cổ thụ sau vườn. Người con thơ dại cũng héo mòn ra đi ngay sau đó...
+                            </p>
+                            <p class="text-xs text-slate-400">
+                                Khi Kazuo sống sót trở về, nhà xưa đã hoang phế, cội anh đào sau vườn đã hút máu và oán khí hóa màu đỏ rực như máu huyết. Oán linh Chiyo ôm đứa con luẩn quẩn hằng đêm bắt gặp ai cũng thét gào hỏi: "Chồng tôi đâu?".
+                            </p>
+                            <p class="text-xs text-slate-300 font-semibold italic">
+                                *Trong hoạt động này, bạn sẽ hóa thân thành người bưu tá giao nhầm giấy báo tử năm xưa, can đảm quay lại ngôi nhà hoang trong sương đêm rờn rợn để đưa ra sự thật, mở lối siêu thoát cứu rỗi linh hồn Chiyo.
+                            </p>
+                        </div>
+
+                        <!-- 3 Endings mechanism info -->
+                        <div class="space-y-3">
+                            <h4 class="font-bold text-rose-400 flex items-center space-x-2">
+                                <i data-lucide="skull" class="w-5 h-5 text-rose-600"></i>
+                                <span>CƠ CHẾ 3 KẾT CỤC KỊCH TÍNH</span>
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                                <div class="bg-slate-900 border border-red-950 p-4 rounded-2xl text-center space-y-1">
+                                    <span class="block font-bold text-rose-500 uppercase">💀 Bad Ending</span>
+                                    <p class="text-slate-500 text-[11px]">Không tìm đủ các mảnh lá thư bưu tá, oán linh tức giận nuốt chửng linh hồn bạn trong hận thù!</p>
+                                </div>
+                                <div class="bg-slate-900 border border-emerald-950 p-4 rounded-2xl text-center space-y-1">
+                                    <span class="block font-bold text-emerald-500 uppercase">✨ True Ending</span>
+                                    <p class="text-slate-500 text-[11px]">Đọc đúng phong thư sám hối, Chiyo buông bỏ oán khí và thanh thản siêu thoát về trời cùng đứa con.</p>
+                                </div>
+                                <div class="bg-slate-900 border border-purple-950 p-4 rounded-2xl text-center space-y-1">
+                                    <span class="block font-bold text-purple-500 uppercase">🔮 Secret Ending</span>
+                                    <p class="text-slate-500 text-[11px]">Giải mã chiếc tráp búp bê gỗ của Kazuo, tìm ra chiếc nhẫn đính ước để kích hoạt cảnh sum họp tuyệt mật.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Registration form ticket type -->
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl">
+                            <h3 class="font-extrabold text-white text-base mb-4 text-center sm:text-left">ĐĂNG KÝ VÉ THAM GIA THỬ THÁCH</h3>
+                            
+                            ${hasReg ? `
+                                <div class="bg-emerald-950 border border-emerald-900 text-emerald-400 font-bold text-sm rounded-2xl p-4 text-center">
+                                    Bạn đã đăng ký vé nhà ma thành công! Mã QR xếp hàng ưu tiên đã lưu trong Lịch Sử.
+                                </div>
+                            ` : `
+                                <form onsubmit="handleHauntedRegistration(event)" class="space-y-4 text-xs sm:text-sm text-slate-300">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Lựa chọn Gói đi</label>
+                                            <select id="ht-type" onchange="updateHauntedCostPreview()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white outline-none">
+                                                <option value="group">Gói Nhóm (3-5 Người) - 50.000 VND</option>
+                                                <option value="couple">Gói Cặp Đôi (2 Người) - 65.000 VND</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Số lượng vé đặt</label>
+                                            <input type="number" id="ht-qty" value="1" min="1" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white outline-none">
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2.5">
+                                        <div class="flex justify-between items-center">
+                                            <span>Tổng số tiền vé dự tính</span>
+                                            <span class="font-extrabold text-red-500 text-base" id="ht-cost-preview">50.000 VND</span>
+                                        </div>
+                                        <div class="text-[10px] text-slate-500 leading-relaxed">
+                                            *Quý khách sẽ nhận được mã QR chuyển khoản demo khi bấm nút đăng ký bên dưới.
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="w-full py-3 bg-red-700 hover:bg-red-800 text-white font-extrabold rounded-2xl shadow-xl shadow-red-950/40 transition-all hover:scale-[1.01] flex items-center justify-center space-x-2">
+                                        <i data-lucide="skull" class="w-5 h-5"></i>
+                                        <span>XÁC NHẬN VÀ LẤY VÉ THU PHÍ</span>
+                                    </button>
+                                </form>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateHauntedCostPreview() {
+            const type = document.getElementById('ht-type').value;
+            const qty = parseInt(document.getElementById('ht-qty').value) || 1;
+            const price = type === 'group' ? 50000 : 65000;
+            document.getElementById('ht-cost-preview').innerText = `${(price * qty).toLocaleString()} VND`;
+        }
+
+        function handleHauntedRegistration(e) {
+            e.preventDefault();
+            const type = document.getElementById('ht-type').value;
+            const qty = parseInt(document.getElementById('ht-qty').value) || 1;
+            const price = type === 'group' ? 50000 : 65000;
+            const total = price * qty;
+
+            const regs = MOCK_DB.getHauntedRegs();
+            regs.push({
+                id: Date.now(),
+                userId: currentUser.id,
+                type: type === 'group' ? 'Gói Nhóm' : 'Gói Cặp Đôi',
+                qty,
+                total,
+                timestamp: new Date().toLocaleString()
+            });
+            MOCK_DB.saveData('SAKURA_HAUNTED_REGS', regs);
+
+            // Log activity history
+            const logs = JSON.parse(localStorage.getItem('SAKURA_LOGS')) || [];
+            logs.push({
+                id: Date.now(),
+                userId: currentUser.id,
+                action_type: 'haunted',
+                title: 'Đăng ký nhà ma',
+                description: `Đăng ký thành công vé tham quan Nhà Ma "Lời nguyền huyết anh đào". Gói: ${type === 'group' ? 'Nhóm' : 'Cặp đôi'} x${qty}.`,
+                time: new Date().toLocaleString()
+            });
+            localStorage.setItem('SAKURA_LOGS', JSON.stringify(logs));
+
+            showToast("Đăng ký vé nhà ma thành công! QR ưu tiên đã kích hoạt.", 'success');
+            renderCurrentView();
+        }
+    </script>
+
+    <!-- VIEW 8: COMMUNITY HUB (community.html) -->
+    <script>
+        let commTab = 'cosplay'; // cosplay or manga
+
+        function viewCommunity() {
+            return `
+                <div class="max-w-5xl mx-auto space-y-8 text-slate-800">
+                    <!-- Title headers -->
+                    <div class="text-center max-w-2xl mx-auto space-y-2">
+                        <span class="bg-pink-100 text-pink-700 text-[10px] font-extrabold uppercase px-3 py-1 rounded-full tracking-wider">
+                            GIAO LƯU VÀ BÌNH CHỌN TÀI NĂNG SÁNG TẠO
+                        </span>
+                        <h1 class="text-2xl sm:text-4xl font-black text-pink-600">Đấu Trường Cosplay & Manga</h1>
+                        <p class="text-xs sm:text-sm text-slate-400">Tham gia bình chọn cho các thí sinh cosplay xuất sắc và các One-shot ấn tượng tại Tháp Sáng Tạo</p>
+                    </div>
+
+                    <!-- Category switcher tabs -->
+                    <div class="flex border-b border-pink-100 max-w-md mx-auto">
+                        <button onclick="changeCommTab('cosplay')" id="comm-tab-cosplay" class="flex-1 py-3 text-center text-sm font-bold border-b-2 transition-all">
+                            🎭 Cosplay Contest
+                        </button>
+                        <button onclick="changeCommTab('manga')" id="comm-tab-manga" class="flex-1 py-3 text-center text-sm font-bold border-b-2 transition-all">
+                            📚 Manga One-Shot
+                        </button>
+                    </div>
+
+                    <div id="comm-dynamic-candidates-view">
+                        <!-- Loaded by setupCommunityListeners -->
+                    </div>
+
+                    <!-- Press review section -->
+                    <section class="bg-white rounded-3xl p-6 sm:p-8 border border-pink-100 shadow-xl space-y-6">
+                        <h3 class="font-extrabold text-lg text-slate-800 flex items-center space-x-2">
+                            <i data-lucide="newspaper" class="w-5 h-5 text-pink-500"></i>
+                            <span>Báo Chí Viết Về Lễ Hội Hoa Anh Đào Gigamall</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs sm:text-sm">
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2.5 flex flex-col justify-between">
+                                <span class="text-[10px] font-black text-rose-600 uppercase">Báo Người Lao Động</span>
+                                <h4 class="font-bold text-slate-800">Lễ hội Hoa Anh Đào Gigamall 2026 lập kỷ lục hơn 2 triệu lượt khách tham quan</h4>
+                                <a href="https://nld.com.vn/le-hoi-hoa-anh-dao-gigamall-2026-lap-ky-luc-hon-2-trieu-luot-khach-tham-quan-196260510211939799.htm" target="_blank" class="text-pink-600 hover:underline font-semibold block text-xs">Xem chi tiết bài viết →</a>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2.5 flex flex-col justify-between">
+                                <span class="text-[10px] font-black text-blue-600 uppercase">VietNamNet</span>
+                                <h4 class="font-bold text-slate-800">Trải nghiệm không gian Nhật Bản chân thật giữa lòng Sài Gòn đầy cuốn hút</h4>
+                                <a href="https://nld.com.vn/le-hoi-hoa-anh-dao-gigamall-2026-lap-ky-luc-hon-2-trieu-luot-khach-tham-quan-196260510211939799.htm" target="_blank" class="text-pink-600 hover:underline font-semibold block text-xs">Xem chi tiết bài viết →</a>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2.5 flex flex-col justify-between">
+                                <span class="text-[10px] font-black text-purple-600 uppercase">Duyên Dáng Việt Nam</span>
+                                <h4 class="font-bold text-slate-800">Check-in Lễ hội Hoa Anh Đào tại Gigamall: Chạm Nhật Bản trọn vẹn</h4>
+                                <a href="https://duyendangvietnam.net.vn/check-in-le-hoi-hoa-anh-dao-tai-gigamall-cham-nhat-ban-giua-long-sai-gon/" target="_blank" class="text-pink-600 hover:underline font-semibold block text-xs">Xem chi tiết bài viết →</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Mock simulated Live chatbox community -->
+                    <section class="bg-slate-900 rounded-3xl p-6 sm:p-8 text-white space-y-6 shadow-xl">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="message-square" class="w-6 h-6 text-pink-500 shrink-0"></i>
+                            <div>
+                                <h3 class="font-extrabold text-lg">Kênh Trò Chuyện Cộng Đồng Giả Lập</h3>
+                                <p class="text-xs text-slate-400">Nơi các fan Anime thảo luận xôm tụ theo thời gian thực</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <!-- Messages block -->
+                            <div class="lg:col-span-8 bg-slate-950 rounded-2xl p-4 h-64 overflow-y-auto space-y-3 border border-slate-800/60" id="community-messages-list">
+                                <!-- Filled by JS code -->
+                            </div>
+
+                            <!-- Comment form inside section -->
+                            <form onsubmit="handleCommunityCommentSubmit(event)" class="lg:col-span-4 bg-slate-800/40 p-4 rounded-2xl border border-slate-800 space-y-4 text-xs sm:text-sm">
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1.5 uppercase font-bold">Chủ đề thảo luận</label>
+                                    <select id="com-comment-cat" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white outline-none">
+                                        <option value="cosplay">Cộng đồng Cosplay Contest</option>
+                                        <option value="manga">Cộng đồng Manga One-Shot</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1.5 uppercase font-bold">Lời bình của bạn</label>
+                                    <textarea id="com-comment-text" rows="3" required placeholder="Bình luận gì đó thú vị..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white outline-none focus:border-pink-500"></textarea>
+                                </div>
+                                <button type="submit" class="w-full py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-xl font-bold transition-all shadow-md shadow-pink-100 flex items-center justify-center space-x-1">
+                                    <i data-lucide="send" class="w-4 h-4"></i>
+                                    <span>Gửi lời bình</span>
+                                </button>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            `;
+        }
+
+        function changeCommTab(tab) {
+            commTab = tab;
+            setupCommunityListeners();
+        }
+
+        function setupCommunityListeners() {
+            const cBtn = document.getElementById('comm-tab-cosplay');
+            const mBtn = document.getElementById('comm-tab-manga');
+            if (cBtn && mBtn) {
+                if (commTab === 'cosplay') {
+                    cBtn.className = "flex-1 py-3 text-center text-sm font-bold border-b-2 border-pink-500 text-pink-600";
+                    mBtn.className = "flex-1 py-3 text-center text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-600";
+                } else {
+                    mBtn.className = "flex-1 py-3 text-center text-sm font-bold border-b-2 border-pink-500 text-pink-600";
+                    cBtn.className = "flex-1 py-3 text-center text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-600";
+                }
+            }
+
+            const dynamicContainer = document.getElementById('comm-dynamic-candidates-view');
+            if (!dynamicContainer) return;
+
+            const candidates = commTab === 'cosplay' ? MOCK_DB.getCospCandidates() : MOCK_DB.getMangCandidates();
+
+            dynamicContainer.innerHTML = `
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
+                    ${candidates.map(cand => `
+                        <div class="bg-white rounded-2xl border border-pink-50 shadow-sm overflow-hidden flex flex-col justify-between">
+                            <div class="relative h-44 bg-cover bg-center" style="background-image: url('${cand.image}')">
+                                <div class="absolute bottom-2 left-2 bg-pink-500 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-full shadow-md flex items-center space-x-1">
+                                    <i data-lucide="vote" class="w-3.5 h-3.5"></i>
+                                    <span>${cand.votes} Phiếu</span>
+                                </div>
+                            </div>
+                            <div class="p-4 space-y-2 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h4 class="font-black text-slate-800 text-xs sm:text-sm line-clamp-1">${cand.name}</h4>
+                                    <span class="text-[9px] text-pink-600 font-bold block leading-tight mb-1.5 uppercase">${cand.character}</span>
+                                    <p class="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">${cand.description}</p>
+                                </div>
+                                
+                                <button onclick="handleCastVote(${cand.id}, '${commTab}')" class="w-full mt-3 py-1.5 bg-pink-50 hover:bg-pink-100 text-pink-600 font-bold rounded-xl text-xs border border-pink-100 transition-colors flex items-center justify-center space-x-1">
+                                    <i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i>
+                                    <span>Bình chọn</span>
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            renderCommunityComments();
+            lucide.createIcons();
+        }
+
+        function renderCommunityComments() {
+            const list = document.getElementById('community-messages-list');
+            if (!list) return;
+
+            const comments = MOCK_DB.getCommunityComments();
+            list.innerHTML = comments.map(comm => `
+                <div class="flex items-start space-x-3 text-xs leading-relaxed">
+                    <div class="w-7 h-7 bg-slate-800 rounded-full flex items-center justify-center font-bold text-pink-400 text-[10px] shrink-0">
+                        ${comm.author.charAt(0).toUpperCase()}
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800/60 rounded-xl px-3 py-2 text-slate-300 max-w-[85%]">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <span class="font-bold text-pink-400">${comm.author}</span>
+                            <span class="text-[9px] bg-slate-800 px-1.5 py-0.5 rounded-full text-slate-500 font-bold uppercase">${comm.cat}</span>
+                            <span class="text-[9px] text-slate-600 font-medium">${comm.time}</span>
+                        </div>
+                        <p class="text-slate-300">${comm.text}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Auto scroll chat to bottom
+            list.scrollTop = list.scrollHeight;
+        }
+
+        function handleCastVote(candidateId, type) {
+            const voteState = MOCK_DB.getVotes();
+            const userVotes = voteState[currentUser.id] || [];
+
+            // Find if already voted in this category Contest category
+            const isCosplay = candidateId <= 5;
+            const hasAlreadyVotedCategory = userVotes.some(vId => isCosplay ? vId <= 5 : vId > 5);
+
+            if (hasAlreadyVotedCategory) {
+                showToast(t('voted_already'), 'error');
+                return;
+            }
+
+            // Record vote
+            userVotes.push(candidateId);
+            voteState[currentUser.id] = userVotes;
+            MOCK_DB.saveData('SAKURA_VOTES', voteState);
+
+            // Increment count in candidates
+            const cKey = isCosplay ? 'SAKURA_COSP_CANDIDATES' : 'SAKURA_MANG_CANDIDATES';
+            const candidates = JSON.parse(localStorage.getItem(cKey));
+            const cand = candidates.find(c => c.id === candidateId);
+            if (cand) cand.votes += 1;
+            localStorage.setItem(cKey, JSON.stringify(candidates));
+
+            // Log activity history
+            const logs = JSON.parse(localStorage.getItem('SAKURA_LOGS')) || [];
+            logs.push({
+                id: Date.now(),
+                userId: currentUser.id,
+                action_type: 'vote',
+                title: 'Bình chọn thành công',
+                description: `Đã bình chọn cho thí sinh/tác phẩm "${cand.name}" trong cuộc thi.`,
+                time: new Date().toLocaleString()
+            });
+            localStorage.setItem('SAKURA_LOGS', JSON.stringify(logs));
+
+            showToast(t('vote_success'), 'success');
+            setupCommunityListeners();
+        }
+
+        function handleCommunityCommentSubmit(e) {
+            e.preventDefault();
+            const cat = document.getElementById('com-comment-cat').value;
+            const text = document.getElementById('com-comment-text').value;
+
+            const comments = MOCK_DB.getCommunityComments();
+            comments.push({
+                id: Date.now(),
+                cat,
+                author: currentUser.name,
+                text,
+                time: 'Vừa xong'
+            });
+            MOCK_DB.saveData('SAKURA_COMMUNITY_COMMENTS', comments);
+
+            // Clear input
+            document.getElementById('com-comment-text').value = '';
+
+            // Refresh
+            renderCommunityComments();
+            showToast("Bình luận của bạn đã gửi lên kênh chung!", "success");
+        }
+    </script>
+
+    <!-- VIEW 9: CULTURE HUB (culture.html) -->
+    <script>
+        let selectedCategoryFilter = 'Tất cả';
+
+        function viewCulture() {
+            const articles = MOCK_DB.getArticles();
+            const filtered = selectedCategoryFilter === 'Tất cả' 
+                ? articles 
+                : articles.filter(a => a.category === selectedCategoryFilter);
+
+            const categories = ['Tất cả', 'Ẩm thực', 'Trang phục', 'Lễ hội', 'Lịch sử', 'Truyền thuyết'];
+
+            return `
+                <div class="max-w-5xl mx-auto space-y-8">
+                    <!-- Headings -->
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <div class="text-center sm:text-left">
+                            <h1 class="text-2xl sm:text-3xl font-black text-pink-600">Góc Văn Hóa Phù Tang</h1>
+                            <p class="text-xs sm:text-sm text-slate-400">Những câu chuyện cổ tích và di sản độc đáo nuôi dưỡng tinh thần Nhật Bản</p>
+                        </div>
+                        <button onclick="navigate('article-create')" class="bg-pink-500 hover:bg-pink-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-lg shadow-pink-100 flex items-center space-x-1 transition-all">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Đăng bài viết mới</span>
+                        </button>
+                    </div>
+
+                    <!-- Category Filters row -->
+                    <div class="flex gap-2 overflow-x-auto pb-2 border-b border-pink-50 whitespace-nowrap text-xs">
+                        ${categories.map(cat => {
+                            const isAct = selectedCategoryFilter === cat;
+                            return `
+                                <button onclick="filterCultureArticles('${cat}')" class="px-4 py-1.5 rounded-full font-bold border transition-all ${
+                                    isAct ? 'bg-pink-500 border-pink-500 text-white shadow-md shadow-pink-100' : 'bg-white border-pink-100 text-slate-500 hover:bg-pink-50'
+                                }">${cat}</button>
+                            `;
+                        }).join('')}
+                    </div>
+
+                    <!-- Articles grid dynamic -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        ${filtered.length === 0 ? `
+                            <div class="col-span-3 text-center py-20 text-slate-400">Chưa có bài viết nào thuộc chủ đề này.</div>
+                        ` : filtered.map(art => `
+                            <div onclick="navigate('article-detail', {id: ${art.id}})" class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-lg hover:scale-[1.01] transition-all flex flex-col justify-between cursor-pointer">
+                                <div class="relative h-44 bg-cover bg-center" style="background-image: url('${art.image}')">
+                                    <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-pink-600 font-extrabold text-[9px] uppercase px-2.5 py-0.5 rounded-full shadow-md">
+                                        ${art.category}
+                                    </span>
+                                </div>
+                                <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+                                    <div class="space-y-1.5">
+                                        <h3 class="font-extrabold text-sm sm:text-base text-slate-800 line-clamp-1">${art.title}</h3>
+                                        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">${art.summary}</p>
+                                    </div>
+                                    <div class="flex justify-between items-center text-[10px] text-slate-400 border-t border-slate-50 pt-2.5 font-semibold">
+                                        <span>Bởi: ${art.author}</span>
+                                        <span>${art.created_at}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterCultureArticles(cat) {
+            selectedCategoryFilter = cat;
+            renderCurrentView();
+        }
+    </script>
+
+    <!-- VIEW 10: ARTICLE DETAIL (article-detail.html) -->
+    <script>
+        function viewArticleDetail(id) {
+            const art = MOCK_DB.getArticles().find(a => a.id === parseInt(id));
+            if (!art) return `<div class="text-center py-20">Không tìm thấy bài viết.</div>`;
+
+            return `
+                <div class="max-w-3xl mx-auto space-y-6">
+                    <button onclick="navigate('culture')" class="flex items-center space-x-1.5 text-pink-600 hover:text-pink-700 font-bold text-sm">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        <span>Quay lại trang văn hóa</span>
+                    </button>
+
+                    <article class="bg-white rounded-3xl p-6 sm:p-8 border border-pink-100 shadow-xl space-y-6">
+                        <div class="space-y-2 text-center sm:text-left border-b border-slate-100 pb-5">
+                            <span class="bg-pink-100 text-pink-700 text-[10px] font-extrabold uppercase px-3 py-1 rounded-full tracking-wider">
+                                Chủ đề: ${art.category}
+                            </span>
+                            <h1 class="text-xl sm:text-2xl font-black text-slate-800 mt-2 leading-tight">${art.title}</h1>
+                            <div class="flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-slate-400 pt-2 font-medium">
+                                <span>Tác giả: <span class="text-pink-600 font-bold">${art.author}</span></span>
+                                <span>Đăng ngày: ${art.created_at}</span>
+                            </div>
+                        </div>
+
+                        <!-- Article Banner photo -->
+                        <div class="h-64 sm:h-80 bg-cover bg-center rounded-2xl shadow-inner border border-slate-100" style="background-image: url('${art.image}')"></div>
+
+                        <!-- Content paragraph body text -->
+                        <div class="text-xs sm:text-sm text-slate-600 leading-relaxed font-light space-y-4">
+                            <p class="font-semibold text-slate-800 mb-2">${art.summary}</p>
+                            <p>${art.content}</p>
+                        </div>
+                    </article>
+                </div>
+            `;
+        }
+    </script>
+
+    <!-- VIEW 11: CREATE ARTICLE (article-create.html) -->
+    <script>
+        function viewArticleCreate() {
+            return `
+                <div class="max-w-2xl mx-auto bg-white rounded-3xl p-6 sm:p-8 border border-pink-100 shadow-xl">
+                    <div class="text-center mb-6">
+                        <h2 class="text-xl sm:text-2xl font-black text-pink-600">Đăng Bài Viết Văn Hóa Mới</h2>
+                        <p class="text-xs text-slate-400 mt-1">Chia sẻ kiến thức bổ ích của bạn về các nét đẹp Nhật Bản cho cộng đồng!</p>
+                    </div>
+
+                    <form onsubmit="handleArticleSubmit(event)" class="space-y-4 text-xs sm:text-sm text-slate-700">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Tiêu đề bài viết</label>
+                            <input type="text" id="art-title" required placeholder="Nhập tiêu đề thu hút..." class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 outline-none focus:border-pink-500">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Chủ đề bài viết</label>
+                                <select id="art-cat" class="w-full border border-slate-200 rounded-xl px-3 py-2 outline-none">
+                                    <option value="Ẩm thực">Ẩm thực</option>
+                                    <option value="Trang phục">Trang phục</option>
+                                    <option value="Lễ hội">Lễ hội</option>
+                                    <option value="Lịch sử">Lịch sử</option>
+                                    <option value="Truyền thuyết">Truyền thuyết</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Tên tác giả hiển thị</label>
+                                <input type="text" id="art-author" required placeholder="Biệt danh..." class="w-full border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-pink-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Tóm tắt ngắn</label>
+                            <input type="text" id="art-summary" required placeholder="Dòng giới thiệu ngắn gọn trong 1 câu..." class="w-full border border-slate-200 rounded-xl px-3.5 py-2 outline-none focus:border-pink-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Ảnh minh họa (Địa chỉ URL)</label>
+                            <input type="text" id="art-img-url" placeholder="Để trống để dùng ảnh mặc định..." class="w-full border border-slate-200 rounded-xl px-3.5 py-2 outline-none focus:border-pink-500 bg-slate-50">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Nội dung chi tiết bài viết</label>
+                            <textarea id="art-content" rows="6" required placeholder="Viết những cảm nghĩ, đúc kết nghiên cứu của bạn..." class="w-full border border-slate-200 rounded-xl px-3.5 py-2 outline-none focus:border-pink-500"></textarea>
+                        </div>
+
+                        <div class="flex gap-3 pt-3">
+                            <button type="button" onclick="navigate('culture')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition-all">Hủy bỏ</button>
+                            <button type="submit" class="flex-1 py-2.5 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-pink-100 flex items-center justify-center space-x-1">
+                                <i data-lucide="check" class="w-4 h-4"></i>
+                                <span>Đăng bài</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        function handleArticleSubmit(e) {
+            e.preventDefault();
+            const title = document.getElementById('art-title').value;
+            const cat = document.getElementById('art-cat').value;
+            const author = document.getElementById('art-author').value;
+            const summary = document.getElementById('art-summary').value;
+            let img = document.getElementById('art-img-url').value.trim();
+            const content = document.getElementById('art-content').value;
+
+            if (!img) {
+                img = "https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?auto=format&fit=crop&q=80&w=400";
+            }
+
+            const arts = MOCK_DB.getArticles();
+            const newArtId = Date.now();
+            arts.unshift({
+                id: newArtId,
+                title,
+                category: cat,
+                author,
+                summary,
+                content,
+                image: img,
+                created_at: 'Vừa xong'
+            });
+            MOCK_DB.saveData('SAKURA_ARTICLES', arts);
+
+            // Log activity history
+            const logs = JSON.parse(localStorage.getItem('SAKURA_LOGS')) || [];
+            logs.push({
+                id: Date.now(),
+                userId: currentUser.id,
+                action_type: 'article',
+                title: 'Đăng bài viết mới',
+                description: `Đăng thành công bài viết văn hóa "${title}" lên trang góc kiến thức.`,
+                time: new Date().toLocaleString()
+            });
+            localStorage.setItem('SAKURA_LOGS', JSON.stringify(logs));
+
+            showToast("Đăng bài viết văn hóa thành công!", "success");
+            navigate('culture');
+        }
+    </script>
+
+    <!-- VIEW 12: USER HISTORY LOGS (history.html) -->
+    <script>
+        let selectedHistoryFilter = 'all';
+
+        function viewHistory() {
+            const logs = JSON.parse(localStorage.getItem('SAKURA_LOGS')) || [];
+            const userLogs = logs.filter(l => l.userId === currentUser.id);
+
+            const filteredLogs = selectedHistoryFilter === 'all' 
+                ? userLogs 
+                : userLogs.filter(l => l.action_type === selectedHistoryFilter);
+
+            return `
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <div class="bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <div class="space-y-1">
+                            <span class="block text-xs uppercase text-pink-100 font-extrabold tracking-wider">Hệ Thống Tích Luỹ Cá Nhân</span>
+                            <h2 class="text-xl sm:text-2xl font-black">Lịch Sử Hoạt Động & Vé Điện Tử</h2>
+                            <p class="text-xs text-pink-100 leading-relaxed font-light">
+                                Xem lại toàn bộ tiến độ check-in, vé tham gia các trò chơi và hoạt động có phí tại sảnh Gigamall.
+                            </p>
+                        </div>
+                        
+                        <div class="bg-white/10 rounded-2xl p-4 text-center border border-white/10 shrink-0 w-full sm:w-auto">
+                            <span class="text-[10px] uppercase font-bold text-pink-200 block">Mã số định danh của bạn</span>
+                            <span class="text-lg font-black block tracking-widest mt-0.5">${currentUser.unique_code}</span>
+                        </div>
+                    </div>
+
+                    <!-- Category filters row -->
+                    <div class="flex gap-2 overflow-x-auto pb-1.5 whitespace-nowrap text-xs">
+                        <button onclick="filterHistoryLogs('all')" class="px-4 py-1.5 rounded-full font-bold border transition-all ${selectedHistoryFilter === 'all' ? 'bg-pink-500 text-white' : 'bg-white text-slate-500' }">Tất cả</button>
+                        <button onclick="filterHistoryLogs('activity')" class="px-4 py-1.5 rounded-full font-bold border transition-all ${selectedHistoryFilter === 'activity' ? 'bg-pink-500 text-white' : 'bg-white text-slate-500' }">Vé sự kiện</button>
+                        <button onclick="filterHistoryLogs('checkin')" class="px-4 py-1.5 rounded-full font-bold border transition-all ${selectedHistoryFilter === 'checkin' ? 'bg-pink-500 text-white' : 'bg-white text-slate-500' }">Con dấu Gian hàng</button>
+                        <button onclick="filterHistoryLogs('haunted')" class="px-4 py-1.5 rounded-full font-bold border transition-all ${selectedHistoryFilter === 'haunted' ? 'bg-pink-500 text-white' : 'bg-white text-slate-500' }">Nhà ma</button>
+                        <button onclick="filterHistoryLogs('yukata')" class="px-4 py-1.5 rounded-full font-bold border transition-all ${selectedHistoryFilter === 'yukata' ? 'bg-pink-500 text-white' : 'bg-white text-slate-500' }">Thiết kế Yukata</button>
+                    </div>
+
+                    <!-- List content -->
+                    <div class="space-y-4">
+                        ${filteredLogs.length === 0 ? `
+                            <div class="bg-white rounded-3xl p-12 text-center border border-pink-100 text-slate-400 text-xs sm:text-sm">
+                                <i data-lucide="folder-open" class="w-12 h-12 text-slate-300 mx-auto mb-3"></i>
+                                <span>Chưa có hoạt động nào được ghi nhận trong danh mục này.</span>
+                            </div>
+                        ` : filteredLogs.map(log => {
+                            let icon = "activity";
+                            let iconColor = "bg-pink-100 text-pink-600";
+                            if (log.action_type === 'checkin') { icon = "award"; iconColor = "bg-emerald-100 text-emerald-600"; }
+                            if (log.action_type === 'haunted') { icon = "skull"; iconColor = "bg-red-100 text-red-600"; }
+                            if (log.action_type === 'article') { icon = "book-open"; iconColor = "bg-blue-100 text-blue-600"; }
+
+                            return `
+                                <div class="bg-white rounded-2xl p-5 border border-pink-100 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:shadow-md transition-all">
+                                    <div class="flex items-start space-x-3.5">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${iconColor}">
+                                            <i data-lucide="${icon}" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-slate-800 text-sm sm:text-base">${log.title}</h4>
+                                            <p class="text-xs text-slate-500 mt-1">${log.description}</p>
+                                            <span class="text-[10px] text-slate-400 block mt-1 font-semibold">${log.time}</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- QR code simulator if digital ticket -->
+                                    ${(log.action_type === 'activity' || log.action_type === 'haunted') ? `
+                                        <div class="shrink-0 text-center space-y-1 w-full sm:w-auto flex flex-col items-center">
+                                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=TICKET-${log.id}" class="w-16 h-16 border border-slate-200 rounded-lg p-0.5 bg-white shadow-inner" alt="Ticket QR">
+                                            <span class="block text-[8px] text-slate-400 tracking-wider uppercase font-black">QUÉT TẠI QUẦY SẢNH</span>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterHistoryLogs(cat) {
+            selectedHistoryFilter = cat;
+            renderCurrentView();
+        }
+    </script>
+
+    <!-- CHATBOT AI ASSISTANT FUNCTIONALITIES -->
+    <script>
+        let chatboxIsOpen = false;
+
+        function toggleChatbox() {
+            const card = document.getElementById('ai-chat-card');
+            const icon = document.getElementById('chat-trigger-icon');
+            if (!card || !icon) return;
+
+            if (chatboxIsOpen) {
+                card.classList.add('hidden', 'translate-y-4', 'opacity-0');
+                icon.setAttribute('data-lucide', 'message-square-text');
+                chatboxIsOpen = false;
+            } else {
+                card.classList.remove('hidden');
+                setTimeout(() => {
+                    card.classList.remove('translate-y-4', 'opacity-0');
+                }, 50);
+                icon.setAttribute('data-lucide', 'x');
+                chatboxIsOpen = true;
+            }
+            lucide.createIcons();
+        }
+
+        function sendQuickMessage(text) {
+            const input = document.getElementById('chat-input');
+            if (input) {
+                input.value = text;
+                handleChatSubmit(new Event('submit'));
+            }
+        }
+
+        function handleChatSubmit(e) {
+            if (e) e.preventDefault();
+            const input = document.getElementById('chat-input');
+            if (!input) return;
+
+            const val = input.value.trim();
+            if (!val) return;
+
+            // Render User bubble
+            appendChatBubble(val, 'user');
+            input.value = '';
+
+            // AI mock processing responses
+            setTimeout(() => {
+                const lower = val.toLowerCase();
+                let answer = "Tôi chưa hiểu rõ câu hỏi lắm. Hãy thử hỏi về: Đăng ký vé, Chuyển khoản, Thuê Yukata, Nhà ma, Trò chơi, Quà tặng hoặc văn hóa nhé!";
+
+                if (lower.includes('đăng ký') || lower.includes('vé') || lower.includes('tham gia')) {
+                    answer = "🌸 Để đăng ký vé tham gia, bạn chỉ cần di chuyển xuống mục 'Lịch trình' ở Trang chủ, chọn hoạt động mình yêu thích và bấm nút 'Đăng ký nhận vé QR'. Với các hoạt động thu phí, hệ thống sẽ hiện thông tin chuyển khoản kèm QR chuyển khoản tự động cực tiện lợi!";
+                } else if (lower.includes('chuyển khoản') || lower.includes('thanh toán') || lower.includes('phí')) {
+                    answer = "💸 Mọi hoạt động có phí tại Lễ hội đều hỗ trợ chuyển khoản ngân hàng Vietcombank 1012345678 của BTC. Sau khi bạn chuyển khoản đúng cú pháp, vé điện tử QR sẽ kích hoạt ngay trong mục Lịch Sử.";
+                } else if (lower.includes('yukata') || lower.includes('thuê') || lower.includes('mặc')) {
+                    answer = "👘 Tại quầy 'Mystical Yukata Shop' (bên trái cổng vào), bạn có thể thuê Yukata với giá cực ưu đãi 50.000đ/giờ. Đặc biệt, bạn còn có thể sử dụng Kiosk AI quét mặt ghép đồ cực đỉnh hoặc tự tay gửi bản thiết kế may riêng giá 750.000đ nữa đó!";
+                } else if (lower.includes('nhà ma') || lower.includes('chiyo') || lower.includes('oán linh')) {
+                    answer = "💀 Trải nghiệm nhà ma mê cung giải đố 'Lời nguyền huyết anh đào' hứa hẹn cực rùng mình! Giá vé: 50.000đ cho nhóm hoặc 65.000đ cho cặp đôi. Có tới 3 kết cục kỳ bí (Bad, True, Secret) đang đợi các thám tử khám phá!";
+                } else if (lower.includes('game') || lower.includes('bản đồ') || lower.includes('gian hàng')) {
+                    answer = "🗺️ Bạn hãy vào tab 'Bản đồ Game'. Di chuyển qua 10 gian hàng và hoàn thành nhiệm vụ (quét QR, nặn đất sét, giải toán Finger Math) để thu thập đủ 10 con dấu đổi trọn bộ quà lưu niệm cao cấp nha!";
+                } else if (lower.includes('quà') || lower.includes('thưởng')) {
+                    answer = "🎁 Có rất nhiều quà tặng độc đáo như Thẻ bài quẻ Omikuji, phong bao lì xì Torii, Quạt xếp hương gỗ Nhật, móc khóa sushi đất sét... Thu thập đủ 10 con dấu gian hàng để đổi bộ quà Sakura Premium đặc sắc nhất!";
+                } else if (lower.includes('văn hóa') || lower.includes('sách') || lower.includes('samurai')) {
+                    answer = "📚 Bạn có thể ghé thăm góc 'Văn hóa Nhật' để khám phá trà đạo matcha, ý nghĩa hoa đào sakura hay lịch sử Samurai oai hùng. Thậm chí bạn cũng có thể tự tạo và đăng tải bài viết văn hóa của riêng mình!";
+                } else if (lower.includes('thời gian') || lower.includes('địa điểm') || lower.includes('ở đâu')) {
+                    answer = "📍 Lễ hội diễn ra từ ngày 21/03 đến ngày 03/05/2026 tại Sảnh Phạm Văn Đồng - TTTM Gigamall (240-242 Phạm Văn Đồng, Thủ Đức, TP.HCM). VÀO CỬA HOÀN TOÀN MIỄN PHÍ!";
+                } else if (lower.includes('vote') || lower.includes('bình chọn') || lower.includes('cosplay')) {
+                    answer = "🎭 Cuộc thi Cosplay Contest và Manga One-shot nằm trong tab 'Cộng đồng'. Hãy dành phiếu bầu quý giá của tài khoản (mỗi tài khoản vote 1 lần) để cổ vũ các thí sinh nỗ lực hết mình nha!";
+                }
+
+                appendChatBubble(answer, 'bot');
+            }, 800);
+        }
+
+        function appendChatBubble(text, sender) {
+            const container = document.getElementById('chat-messages-container');
+            if (!container) return;
+
+            const bubble = document.createElement('div');
+            bubble.className = sender === 'user' ? "flex items-start justify-end space-x-2" : "flex items-start space-x-2";
+            
+            if (sender === 'user') {
+                bubble.innerHTML = `
+                    <div class="bg-pink-500 text-white rounded-lg p-2.5 shadow-sm text-xs max-w-[80%]">
+                        <p>${text}</p>
+                    </div>
+                    <div class="w-7 h-7 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center font-bold text-xs shrink-0">
+                        U
+                    </div>
+                `;
+            } else {
+                bubble.innerHTML = `
+                    <div class="w-7 h-7 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center shrink-0">
+                        <i data-lucide="bot" class="w-4 h-4"></i>
+                    </div>
+                    <div class="bg-white rounded-lg p-2.5 shadow-sm text-xs text-slate-700 max-w-[80%] border border-slate-100">
+                        <p>${text}</p>
+                    </div>
+                `;
+            }
+
+            container.appendChild(bubble);
+            lucide.createIcons();
+            
+            // Scroll to bottom
+            container.scrollTop = container.scrollHeight;
+        }
+    </script>
+
+    <!-- SAKURA PETALS FALLING EFFECT ENGINE -->
+    <script>
+        const container = document.getElementById('sakura-container');
+        if (container) {
+            for (let i = 0; i < 25; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.width = Math.random() * 10 + 10 + 'px';
+                petal.style.height = Math.random() * 10 + 10 + 'px';
+                petal.style.animationDuration = Math.random() * 6 + 4 + 's';
+                petal.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(petal);
+            }
+        }
+    </script>
+
+    <!-- BOOTSTRAP INITS -->
+    <script>
+        // Init navigation & app view on document ready
+        window.addEventListener('DOMContentLoaded', () => {
+            initLayout();
+            renderCurrentView();
+        });
+    </script>
+</body>
+</html>
